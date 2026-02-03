@@ -1,6 +1,7 @@
 {
     "scripts": {
         "front": "cd frontend && npm run dev",
+        "front-serve": "cd frontend && vue-cli-service serve",
         "back": "cd backend && npm run dev"
     }
 }

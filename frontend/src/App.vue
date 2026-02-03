@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import Counter from '@v/Counter.vue'
+import Footer from '@c/layout/Footer.vue';
+
 </script>
 
 <template>
-  <Counter />
+  <router-view />
+
+  <Footer />
 </template>
 
 <style scoped>

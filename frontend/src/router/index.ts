@@ -6,8 +6,24 @@ export const router = createRouter({
     routes: [
         {
             path: "/",
+            name: "Home",
+            component: ()=> import("@v/Home.vue")
+        },
+        {
+            path: "/search",
+            name: "Search",
+            component: ()=> import("@v/Search.vue")
+        },
+        {
+            path: "/favorites",
+            name: "Favorites",
+            component: ()=> import("@v/Favorites.vue")
+        },
+        {
+            path: "/counter",
             name: "Counter",
-            component: ()=> import("@v/Counter.vue")
-        }
+            component: ()=> import("@v/Settings.vue")
+        },
+
     ]
 })
