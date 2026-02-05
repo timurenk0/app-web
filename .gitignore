@@ -1,4 +1,9 @@
 # =========================
+# .gitignore 
+# =========================
+.gitignore
+
+# =========================
 # Dependencies
 # =========================
 node_modules/
@@ -48,6 +53,8 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+frontend/.vscode
+backend/.vscode
 
 # =========================
 # JetBrains
