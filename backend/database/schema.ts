@@ -11,8 +11,8 @@ export const products = pgTable("products", {
     name: varchar("name", { length: 255 }).notNull().unique(),
     calories: integer("calories").notNull(),
     protein: integer("protein").notNull(),
-    fat: integer("protein").notNull(),
-    carb: integer("protein").notNull(),
+    fat: integer("fat").notNull(),
+    carb: integer("carb").notNull(),
 });
 
 export const insertProductSchema = createInsertSchema(products).omit({

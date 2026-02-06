@@ -20,6 +20,11 @@ export class DatabaseStorage {
         const [product] = await db.select().from(products).where(eq(products.id, id));
         return product;
     }
+
+    async addProduct(productData: InsertProduct): Promise<Product> {
+        const [product] = await db.insert(products).values(productData).returning();
+        return product;
+    }
     
     /* ==================== Users Methods ==================== */
     async getUsers(): Promise<Omit<User, "password">[]> {
@@ -73,3 +78,6 @@ export class DatabaseStorage {
         return userFoodEntry;
     }
 }
+
+
+export const storage = new DatabaseStorage();
