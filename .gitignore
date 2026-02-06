@@ -32,6 +32,8 @@ node_modules/.tmp/
 .env
 .env.*
 !.env.example
+backend/.env
+frontend/.env
 
 # =========================
 # Logs
