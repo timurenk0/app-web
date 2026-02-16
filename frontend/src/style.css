@@ -1,17 +1,28 @@
 @import "tailwindcss";
 
-
 :root {
-  --color-bg: #E3F0D9;
-  --color-text: #3A3A3A;
+  --color-background: #E3F0D9;
+  --color-text: #3a3a3a;
+  --color-primary: #27A423;
+  --spacing: 0.25rem;
 }
 
-.dark {
-  --color-bg: #000;
-  --color-text: #fff;
+@theme {
+  --color-background: var(--color-background);
+  --color-text: var(--color-text);
+  --color-main: var(--color-primary);
+}
+
+@layer components {
+  .calendar-day {
+    border: 2px solid var(--color-primary);
+    border-radius: 9999px; 
+    padding: calc(var(--spacing)*2) calc(var(--spacing)*3) !important;
+    text-align: center;
+    color: var(--color-text);
+  }
 }
 
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  @apply bg-background text-text
 }
