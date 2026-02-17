@@ -1,8 +1,17 @@
 @import "tailwindcss";
+@layer base, primeVue, utilities;
+
+.quicksand {
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
 
 :root {
   --color-background: #E3F0D9;
-  --color-text: #3a3a3a;
+  --color-text: #2a2a2a;
+  --color-ghost-text: #a4a4a4;
+  --color-ghost: #e5e5e5;
   --color-primary: #27A423;
   --spacing: 0.25rem;
 }
@@ -11,6 +20,8 @@
   --color-background: var(--color-background);
   --color-text: var(--color-text);
   --color-main: var(--color-primary);
+  --color-ghost: var(--color-ghost);
+  --color-ghost-text: var(--color-ghost-text);
 }
 
 @layer components {
@@ -24,5 +35,6 @@
 }
 
 body {
+  font-family: "Quicksand", sans-serif;
   @apply bg-background text-text
 }

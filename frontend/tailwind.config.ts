@@ -5,6 +5,14 @@ export default {
         "./src/**/*.{vue,js,ts,jsx,tsx}"
     ],
     darkMode: "class",
-    theme: {},
-    plugins: [], 
+    theme: {
+        extend: {
+            cssLayer: {
+                name: "primevue",
+                order: "tailwind-base, primeui, tailwind-utilities"
+            }
+        }
+    },
+    plugins: [forms, primeui], 
+
 }
