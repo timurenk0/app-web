@@ -14,9 +14,10 @@ const macros = {
 </script>
 
 <template>
-    <section class="bg-white w-full rounded-lg">
+    <section class="card">
+        <p class="card-title">Calories</p>
         <DoughnutChart :totalCalories="totalCalories" :consumed="consumed" />
-        <div class="w-full flex gap-6 justify-between px-2 pb-4">
+        <div class="w-full flex gap-6 justify-between">
             <BarChart v-for="[k, v] in Object.entries(macros)"
                 :key="k"
                 :title="k"
