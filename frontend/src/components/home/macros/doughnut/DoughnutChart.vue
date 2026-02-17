@@ -42,9 +42,9 @@ const chartOptions = {
 </script>
 
 <template>
-    <div class="relative flex justify-center h-[200px]" v-on:click="toggleChartView">
+    <div class="relative flex justify-center h-[200px] aspect-auto">
         <Doughnut :options="chartOptions" :data="chartData" />
-        <div class="absolute pt-6 inset-0 flex flex-col items-center justify-center">
+        <div class="absolute top-20 text-center cursor-pointer" v-on:click="toggleChartView">
             <p class="text-text text-4xl font-semibold">{{ chartView === "consumed" ? consumed : totalCalories-consumed}}<span class="text-xs">/{{ totalCalories }}</span></p>
             <p class="text-ghost-text">{{ chartView === "consumed" ? "Consumed" : "Remaining" }}</p>
         </div>
