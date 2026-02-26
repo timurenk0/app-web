@@ -28,7 +28,7 @@ const macros = {
                     :color="v.color"
                     :consumed="v.consumed"
                     :total="v.total"
-                     />
+                />
             </div>
         </template>
     </Card>

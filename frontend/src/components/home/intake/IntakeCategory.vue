@@ -39,13 +39,14 @@ const { title } = defineProps<{
         </template>
         
         <!-- Custom collapse button with dynamic icon using custom toggle function -->
+        <!-- CURRENT BUG: custom icon has smaller hitbox than original togglebutton of the Panel component. Can miss the icon switch if clicked out of the bounds of the icon -->
         <template #toggleicon>
-            <button v-on:click="toggle" v-if="toggled">
+            <div v-on:click="toggle" v-if="toggled">
                 <ArrowDown />
-            </button>
-            <button v-on:click="toggle" v-else>
+            </div>
+            <div v-on:click="toggle" v-else>
                 <ArrowUp />
-            </button>
+            </div>
         </template>
 
         <template #icons>
