@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DoughnutChart from './doughnut/DoughnutChart.vue';
 import BarChart from './bar/BarChart.vue';
+import Card from "primevue/card";
 
 
 const totalCalories = 2200;
@@ -14,17 +15,21 @@ const macros = {
 </script>
 
 <template>
-    <section class="card">
-        <p class="card-title">Macros</p>
-        <DoughnutChart :totalCalories="totalCalories" :consumed="consumed" />
-        <div class="w-full flex gap-6 justify-between">
-            <BarChart v-for="[k, v] in Object.entries(macros)"
-                :key="k"
-                :title="k"
-                :color="v.color"
-                :consumed="v.consumed"
-                :total="v.total"
-                 />
-        </div>
-    </section>
+    <Card class="w-full">
+        <template #title>
+            <p class="card-title">Macros</p>
+        </template>
+        <template #content>
+            <DoughnutChart :totalCalories="totalCalories" :consumed="consumed" />
+            <div class="w-full flex gap-6 justify-between">
+                <BarChart v-for="[k, v] in Object.entries(macros)"
+                    :key="k"
+                    :title="k"
+                    :color="v.color"
+                    :consumed="v.consumed"
+                    :total="v.total"
+                     />
+            </div>
+        </template>
+    </Card>
 </template>
