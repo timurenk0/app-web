@@ -17,7 +17,7 @@ const macros = {
 <template>
     <Card class="w-full">
         <template #title>
-            <p class="card-title">Macros</p>
+            <p class="card-title text-4xl">Macros</p>
         </template>
         <template #content>
             <DoughnutChart :totalCalories="totalCalories" :consumed="consumed" />
