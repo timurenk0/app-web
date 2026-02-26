@@ -6,6 +6,7 @@ import {
 } from "./schema"
 import { db } from "./db"
 import { eq } from "drizzle-orm";
+import bcrypt from "bcryptjs";
 
 
 
@@ -58,6 +59,15 @@ export class DatabaseStorage {
         return user;
     }
 
+    async addUser(insertUser: InsertUser): Promise<Omit<User, "password" | "createdAt">> {
+        const hashPassword = await bcrypt.hash(insertUser.password, 10);
+        const [user] = await db.insert(users).values({...insertUser, password: hashPassword}).returning({
+            id: users.id,
+            username: users.username,
+            email: users.email,
+        });
+        return user;
+    }
     /* ==================== User Profiles Methods ==================== */
     async getUserProfiles(): Promise<UserProfile[]> {
         return await db.select().from(userProfiles);
