@@ -31,12 +31,12 @@ const chartData = {
         backgroundColor: ["#27a433", "#e5e5e5"],
         borderWidth: 0,
         spacing: 8,
-        borderRadius: [10, 10],
+        borderRadius: [20, 20],
     }],
 }
 const chartOptions = {
-    rotation: -90,
-    circumference: 180,
+    rotation: -112.5,
+    circumference: 225,
     cutout: "90%",
 }
 </script>
