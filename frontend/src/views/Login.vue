@@ -8,6 +8,22 @@ import { ref } from 'vue';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { useToast } from "primevue/usetoast";
 import { z } from 'zod';
+import { authClient } from '@l/auth-client';
+
+
+const { signIn } = authClient;
+
+const loginUser = async () => {
+    try {
+        await signIn.social({
+            provider: "google",
+            callbackURL: "http://localhost:5173"
+        })
+    } catch (error) {
+        const msg = error instanceof Error ? error.message : "Unknown error";
+        throw new Error(msg);
+    }
+}
 
 const toast = useToast();
 const initialValues = ref({
@@ -46,7 +62,7 @@ const onFormSubmit = ({ valid }: { valid: boolean }) => {
                         <InputText name="password" type="password" placeholder="Password" />
                         <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">{{ $form.password.error?.message }}</Message>
                     </div>
-                    <Button type="submit" severity="secondary" label="Submit" />
+                    <Button v-on:click="loginUser" severity="secondary" label="Submit" />
                 </Form>
             </template>
         </Card>

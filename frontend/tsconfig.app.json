@@ -7,6 +7,7 @@
     "paths": {
       "@c/*": ["src/components/*"],
       "@v/*": ["src/views/*"],
+      "@l/*": ["lib/*"]
     },
 
     /* Linting */

@@ -10,6 +10,7 @@ export default defineConfig({
     alias: {
       "@c": path.resolve(__dirname, "src/components"),
       "@v": path.resolve(__dirname, "src/views"),
+      "@l": path.resolve(__dirname, "lib/")
     }
   }
 })

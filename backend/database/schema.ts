@@ -1,108 +1,93 @@
-import { relations, sql } from "drizzle-orm";
-import { pgTable, serial, integer, varchar, timestamp, check } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
-import z from "zod";
+import { relations } from "drizzle-orm";
+import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
 
-
-// DATABASE TABLES SCHEMA
-
-export const products = pgTable("products", {
-    id: serial("id").primaryKey(),
-    name: varchar("name", { length: 255 }).notNull().unique(),
-    calories: integer("calories").notNull(),
-    protein: integer("protein").notNull(),
-    fat: integer("fat").notNull(),
-    carb: integer("carb").notNull(),
+export const user = pgTable("user", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull().unique(),
+  emailVerified: boolean("email_verified").default(false).notNull(),
+  image: text("image"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .notNull(),
 });
 
-export const insertProductSchema = createInsertSchema(products).omit({
-    id: true
-});
+export const session = pgTable(
+  "session",
+  {
+    id: text("id").primaryKey(),
+    expiresAt: timestamp("expires_at").notNull(),
+    token: text("token").notNull().unique(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
+    ipAddress: text("ip_address"),
+    userAgent: text("user_agent"),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+  },
+  (table) => [index("session_userId_idx").on(table.userId)],
+);
 
+export const account = pgTable(
+  "account",
+  {
+    id: text("id").primaryKey(),
+    accountId: text("account_id").notNull(),
+    providerId: text("provider_id").notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    accessToken: text("access_token"),
+    refreshToken: text("refresh_token"),
+    idToken: text("id_token"),
+    accessTokenExpiresAt: timestamp("access_token_expires_at"),
+    refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
+    scope: text("scope"),
+    password: text("password"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
+  },
+  (table) => [index("account_userId_idx").on(table.userId)],
+);
 
-export const users = pgTable("users", {
-    id: serial("id").primaryKey(),
-    username: varchar("username", { length: 255 }).notNull(),
-    email: varchar("email", { length: 255 }).notNull().unique(),
-    password: varchar("password", { length: 255 }).notNull(),
-    createdAt: timestamp("created_at").defaultNow(),
-});
+export const verification = pgTable(
+  "verification",
+  {
+    id: text("id").primaryKey(),
+    identifier: text("identifier").notNull(),
+    value: text("value").notNull(),
+    expiresAt: timestamp("expires_at").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
+  },
+  (table) => [index("verification_identifier_idx").on(table.identifier)],
+);
 
-export const insertUserSchema = createInsertSchema(users).omit({
-    id: true,
-    createdAt: true
-});
-
-
-export const userProfiles = pgTable("user_profiles", {
-    userId: integer("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-    currentWeight: integer("current_weight").notNull(),
-    goalWeight: integer("goal_weight").notNull(),
-    activityLevel: varchar("activity_level", { length: 20 }).notNull(),
-}, (table) => [
-    check("activity_level_check", sql`activity_level IN ('high', 'medium', 'low')`),
-]);
-
-export const insertUserProfileSchema = createInsertSchema(userProfiles);
-
-
-export const userFoodEntries = pgTable("user_food_entries", {
-    id: serial("id").primaryKey(),
-    userId: integer("user_id").notNull().references(()=>users.id, { onDelete: "cascade" }),
-    productId: integer("product_id").notNull().references(()=>products.id, { onDelete: "cascade" }),
-    quantity: integer("quantity").notNull(),
-    createdAt: timestamp("created_at").defaultNow(),
-});
-
-export const insertUserFoodEntrieSchema = createInsertSchema(userFoodEntries).omit({
-    id: true,
-    createdAt: true
-});
-
-
-// CREATE DATABASE SCHEMA TYPES
-
-export type Product = typeof products.$inferSelect;
-export type InsertProduct = z.infer<typeof insertProductSchema>;
-
-export type User = typeof users.$inferSelect;
-export type InsertUser = z.infer<typeof insertUserSchema>;
-
-export type UserProfile = typeof userProfiles.$inferSelect;
-export type InsertUserProfile = z.infer<typeof insertUserProfileSchema>;
-
-export type UserFoodEntry = typeof userFoodEntries.$inferSelect;
-export type InsertUserFoodEntry = z.infer<typeof insertUserFoodEntrieSchema>;
-
-
-// DEFINE TABLE RELATIONS
-
-export const productRelations = relations(products, ({ many }) => ({
-    userFoodEntry: many(products)
+export const userRelations = relations(user, ({ many }) => ({
+  sessions: many(session),
+  accounts: many(account),
 }));
 
-export const userRelations = relations(users, ({ one, many }) => ({
-    userProfile: one(userProfiles, {
-        fields: [users.id],
-        references: [userProfiles.userId]
-    }),
-    userFoodEntry: many(userFoodEntries)
+export const sessionRelations = relations(session, ({ one }) => ({
+  user: one(user, {
+    fields: [session.userId],
+    references: [user.id],
+  }),
 }));
 
-export const userProfileRelations = relations(userProfiles, ({ one }) => ({
-    user: one(users, {
-        fields: [userProfiles.userId],
-        references: [users.id]
-    })
-}));
-
-export const userFoodEntryRelations = relations(userFoodEntries, ({ one}) => ({
-    user: one(users, {
-        fields: [userFoodEntries.userId],
-        references: [users.id]
-    }),
-    product: one(products, {
-        fields: [userFoodEntries.productId],
-        references: [products.id]
-    })
+export const accountRelations = relations(account, ({ one }) => ({
+  user: one(user, {
+    fields: [account.userId],
+    references: [user.id],
+  }),
 }));
