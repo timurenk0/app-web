@@ -8,36 +8,30 @@ import { ref } from 'vue';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { useToast } from "primevue/usetoast";
 import { z } from 'zod';
-import { authClient } from '@l/auth-client';
+import { signInWithEmail, signInWithGoogle } from '@l/auth-client';
 
 
-const { signIn } = authClient;
+const toast = useToast();
+const initialValues = ref({
+    email: '',
+    password: ''
+});
 
-const loginUser = async () => {
+const formSchema = z.object({
+    email: z.email().min(1, { message: 'Email is required.' }),
+    password: z.string().min(1, { message: 'Password must be at least 8 characters long' })
+})
+const resolver = ref(zodResolver(formSchema));
+type loginFormValues = z.infer<typeof formSchema>;
+
+const loginWithGoogle = async () => {
     try {
-        await signIn.social({
-            provider: "google",
-            callbackURL: "http://localhost:5173"
-        })
+        await signInWithGoogle();
     } catch (error) {
         const msg = error instanceof Error ? error.message : "Unknown error";
         throw new Error(msg);
     }
 }
-
-const toast = useToast();
-const initialValues = ref({
-    username: '',
-    email: '',
-    password: ''
-});
-
-const resolver = ref(zodResolver(
-    z.object({
-        email: z.email().min(1, { message: 'Email is required.' }),
-        password: z.string().min(1, { message: 'Password must be at least 8 characters long' })
-    })
-));
 
 const onFormSubmit = ({ valid }: { valid: boolean }) => {
     if (valid) {
@@ -62,8 +56,13 @@ const onFormSubmit = ({ valid }: { valid: boolean }) => {
                         <InputText name="password" type="password" placeholder="Password" />
                         <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">{{ $form.password.error?.message }}</Message>
                     </div>
-                    <Button v-on:click="loginUser" severity="secondary" label="Submit" />
+                    <Button v-on:click="loginUser" severity="contrast" label="Submit" />
                 </Form>
+                <p class="text-center my-4">or</p>
+                <Button severity="secondary" fluid v-on:click="loginWithGoogle">
+                    <v-icon name="fc-google"></v-icon>
+                    Login with Google
+                </Button>
             </template>
         </Card>
     </section>
