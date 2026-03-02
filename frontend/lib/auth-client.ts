@@ -11,6 +11,7 @@ export const signInWithGoogle = async () => {
         provider: "google",
         callbackURL: CALLBACK_URL
     });
+    console.log(data);
 };
 
 export const signUpWithEmail = async (userInfo: { name: string, email: string, password: string }) => {
@@ -18,6 +19,7 @@ export const signUpWithEmail = async (userInfo: { name: string, email: string, p
         ...userInfo,
         callbackURL: CALLBACK_URL
     })
+    console.log(data);
 }
 
 export const signInWithEmail = async (loginInfo: { name: string, email: string, password: string }) => {
@@ -25,9 +27,15 @@ export const signInWithEmail = async (loginInfo: { name: string, email: string, 
         ...loginInfo,
         callbackURL: CALLBACK_URL
     });
+    console.log(data);
 }
 
 export const isLoggedIn = async (): Promise<boolean> => {
-    const session = await authClient.getSession();
-    return !!session.data;
+    const { data: session } = await authClient.getSession();
+    return !!session;
+}
+
+export const logOut = async (): Promise<boolean> => {
+    await authClient.signOut();
+    return true;
 }
