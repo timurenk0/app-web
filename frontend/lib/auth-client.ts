@@ -9,7 +9,7 @@ const CALLBACK_URL = "http://localhost:5173"
 export const signInWithGoogle = async () => {
     const data = await authClient.signIn.social({
         provider: "google",
-        callbackURL: CALLBACK_URL
+        callbackURL: CALLBACK_URL,
     });
     console.log(data);
 };
@@ -32,6 +32,7 @@ export const signInWithEmail = async (loginInfo: { name: string, email: string, 
 
 export const isLoggedIn = async (): Promise<boolean> => {
     const { data: session } = await authClient.getSession();
+    console.log(session);
     return !!session;
 }
 

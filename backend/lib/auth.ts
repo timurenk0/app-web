@@ -62,6 +62,18 @@ export const auth = betterAuth({
         cookieCache: {
             enabled: true,
             maxAge: 300
+        },   
+    },
+    
+    // user
+    user: {
+        additionalFields: {
+            role: {
+                type: ["user", "admin"],
+                required: true,
+                defaultValue: "user",
+                input: false
+            }
         }
     }
-})
+});

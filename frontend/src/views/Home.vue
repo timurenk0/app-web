@@ -8,6 +8,7 @@ import { logOut } from '@l/auth-client';
 const logout = async () => {
     try {
         const isLoggedOut = await logOut();    
+        
         console.log(isLoggedOut)
         window.location.reload();
         return;
