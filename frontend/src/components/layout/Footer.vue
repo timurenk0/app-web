@@ -5,14 +5,14 @@ import { BookTextIcon, HomeIcon, Settings2Icon, TrendingUpIcon, UserIcon } from 
 </script>
 
 <template>
-    <footer class="fixed bottom-0 bg-white/60 w-full flex justify-between items-center px-5">
+    <footer class="fixed left-0 bottom-0 bg-white/60 w-full flex justify-between items-center px-5">
         <a href="/recipies">
             <BookTextIcon :size="32" />
         </a>
         <a href="/stats">
             <TrendingUpIcon :size="32" />
         </a>
-        <a class="relative bottom-10 bg-green border rounded-full px-4 py-4">
+        <a href="/" class="relative bottom-10 bg-green border rounded-full px-4 py-4">
             <HomeIcon :size="48" />
         </a>
         <a href="/user">
