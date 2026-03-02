@@ -1,3 +1,4 @@
+import { isLoggedIn } from "@l/auth-client";
 import { createRouter, createWebHistory } from "vue-router";
 
 
@@ -20,4 +21,12 @@ export const router = createRouter({
             component: ()=> import("@v/Signup.vue")
         },
     ]
+});
+
+router.beforeEach(async (to, from) => {
+    const access = await isLoggedIn();
+    if (!access && to.name !== "Login") {
+        console.log("Should be redirected")
+        return { name: "Login" }
+    }
 });

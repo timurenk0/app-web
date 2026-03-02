@@ -5,7 +5,7 @@ import Card from "primevue/card";
 
 
 const totalCalories = 2200;
-const consumed = 1543;
+const consumed = 1000;
 
 const macros = {
     Protein: {color: "#DB7070", consumed: 100, total: 150},

@@ -26,3 +26,8 @@ export const signInWithEmail = async (loginInfo: { name: string, email: string, 
         callbackURL: CALLBACK_URL
     });
 }
+
+export const isLoggedIn = async (): Promise<boolean> => {
+    const session = await authClient.getSession();
+    return !!session.data;
+}
