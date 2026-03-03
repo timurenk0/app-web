@@ -6,6 +6,7 @@ import Chart from "primevue/chart";
 const today = new Date().getDay();
 const documentStyle = getComputedStyle(document.documentElement);
 const primaryColor = documentStyle.getPropertyValue("--color-primary");
+const primaryGhostColor = documentStyle.getPropertyValue("--color-primary-ghost")
 
 const chartData: ChartData = {
     labels: [today-6, today-5, today-4, today-3, today-2, today-1, today],
@@ -13,21 +14,25 @@ const chartData: ChartData = {
         {
             label: "Weight",
             data: [67, 69, 72, 71, 70, 75, 80],
-            fill: false,
+            fill: true,
             borderColor: primaryColor,
-            backgroundColor: primaryColor,
+            backgroundColor: primaryGhostColor,
             tension: 0
         },
+        {
+            label: "Goal",
+            data: new Array(7).fill(88), 
+            fill: false,
+            borderColor: "#666",
+            backgroundColor: "#99999944",
+            borderDash: [4],
+            tension: 0
+        }
     ],
 };
 const chartOptions: ChartOptions = {
     maintainAspectRatio: false,
     aspectRatio: 0.6,
-    plugins: {
-        legend: {
-            display: true,
-        }
-    },
     scales: {
         y: {
             min: 40,

@@ -15,9 +15,10 @@
 :root {
   --color-background: #E3F0D9;
   --color-text: #2a2a2a;
-  --color-ghost-text: #a4a4a4;
-  --color-ghost: #e5e5e5;
   --color-primary: #27A423;
+  --color-ghost: #e5e5e5;
+  --color-primary-ghost: #27a42344;
+  --color-text-ghost: #a4a4a4;
   --spacing: 0.25rem;
 }
 
@@ -26,7 +27,7 @@
   --color-text: var(--color-text);
   --color-main: var(--color-primary);
   --color-ghost: var(--color-ghost);
-  --color-ghost-text: var(--color-ghost-text);
+  --color-ghost-text: var(--color-text-ghost);
 }
 
 @layer components {
