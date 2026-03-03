@@ -6,6 +6,18 @@ export const authClient = createAuthClient({
 
 const CALLBACK_URL = "http://localhost:5173"
 
+
+export const auth = async () => {
+    try {
+        const { data: session } = await authClient.getSession();
+        if (!session) throw new Error("No session");
+        return session.user;
+    } catch (error) {
+        const msg = error instanceof Error ? error.message : "Unknown error";
+        throw new Error(`Failed to load user data: ${msg}`);
+    }
+}
+
 export const signInWithGoogle = async () => {
     const data = await authClient.signIn.social({
         provider: "google",

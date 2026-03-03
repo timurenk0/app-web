@@ -3,6 +3,14 @@ import Image from 'primevue/image';
 import Card from 'primevue/card';
 import Button from "primevue/button";
 import { ChevronRight } from 'lucide-vue-next';
+
+
+const { username, email } = defineProps<{
+    username: string,
+    email: string
+}>();
+
+console.log(username, email)
 </script>
 
 <template>
@@ -20,8 +28,8 @@ import { ChevronRight } from 'lucide-vue-next';
                         <p class="text-xs text-center mt-1 underline">Change photo</p>
                 </div>
                 <div class="col-span-2 my-auto mx-auto">
-                    <h2 class="text-main text-lg font-semibold">Username</h2>
-                    <p class="text-xs text-ghost-text">user.email@xyz.com</p>
+                    <h2 class="text-main text-lg font-semibold">{{ username }}</h2>
+                    <p class="text-xs text-ghost-text">{{ email }}</p>
                 </div>
                 <div class="col-span-1 my-auto ml-auto">
                     <Button severity="secondary" class="h-8 w-10">
