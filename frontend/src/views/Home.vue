@@ -6,7 +6,7 @@ import Macros from '@c/home/macros/Macros.vue';
 </script>
 
 <template>
-    <section class="flex flex-col align-center gap-4">
+    <section class="flex flex-col items-center gap-4">
         <Calendar />
         <Macros />
         <Intake />

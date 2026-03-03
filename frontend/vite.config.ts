@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [vue(), tailwindcss()],
   resolve: {
     alias: {
+      "@": path.resolve(__dirname, "./"),
       "@c": path.resolve(__dirname, "src/components"),
       "@v": path.resolve(__dirname, "src/views"),
       "@l": path.resolve(__dirname, "lib/")

@@ -1,5 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import UserInfo from '../components/user/UserInfo.vue';
+</script>
 
 <template>
-    <h1>User settings</h1>
+    <section class="flex flex-col items-center gap-4">
+        <UserInfo />
+    </section>
 </template>
