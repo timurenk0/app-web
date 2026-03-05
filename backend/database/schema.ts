@@ -1,5 +1,7 @@
 import { relations, sql } from "drizzle-orm";
 import { pgTable, text, timestamp, boolean, index, integer, doublePrecision, check, serial } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+import z from "zod";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -25,7 +27,11 @@ export const foodEntry = pgTable("food_entry", {
   protein: doublePrecision("protein").notNull(),
   fat: doublePrecision("fat").notNull(),
   salt: doublePrecision("salt").notNull()
-}, (table) => [check("uom", sql`uom IN ('g', 'ml')`)])
+}, (table) => [check("uom", sql`uom IN ('g', 'ml')`)]);
+
+export const insertFoodEntrySchema = createInsertSchema(foodEntry).omit({
+  id: true
+})
 
 export const session = pgTable(
   "session",
@@ -85,6 +91,9 @@ export const verification = pgTable(
   },
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
+
+export type FoodEntry = typeof foodEntry.$inferSelect;
+export type InsertFoodEntry = z.infer<typeof insertFoodEntrySchema>;
 
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
