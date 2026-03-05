@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BookTextIcon, HomeIcon, Settings2Icon, TrendingUpIcon, UserIcon } from 'lucide-vue-next';
+import { HomeIcon, TrendingUpIcon, UserIcon } from 'lucide-vue-next';
 import { ref } from 'vue';
 
 const location = window.location.pathname;
@@ -7,11 +7,9 @@ console.log(location)
 const activeIdx = ref(location);
 
 const items = [
-    { icon: BookTextIcon, href: "/recipies" },
     { icon: TrendingUpIcon, href: "/stats" },
     { icon: HomeIcon, href: "/" },
     { icon: UserIcon, href: "/user" },
-    { icon: Settings2Icon, href: "/settings" },
 ]
 
 function setActive(idx: string) {
@@ -21,7 +19,7 @@ function setActive(idx: string) {
 
 <template>
     <footer class="fixed left-0 bottom-0 w-full">
-        <div class="bg-white footer-shadow grid grid-cols-5 mx-4 my-2 py-4 rounded-full">
+        <div class="bg-white footer-shadow grid grid-cols-3 mx-16 my-2 py-4 rounded-full">
             <div
                 v-for="(item,index) in items"
                 :key="index"
