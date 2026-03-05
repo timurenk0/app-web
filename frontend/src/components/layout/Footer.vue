@@ -2,7 +2,9 @@
 import { BookTextIcon, HomeIcon, Settings2Icon, TrendingUpIcon, UserIcon } from 'lucide-vue-next';
 import { ref } from 'vue';
 
-const activeIdx = ref(2);
+const location = window.location.pathname;
+console.log(location)
+const activeIdx = ref(location);
 
 const items = [
     { icon: BookTextIcon, href: "/recipies" },
@@ -12,7 +14,7 @@ const items = [
     { icon: Settings2Icon, href: "/settings" },
 ]
 
-function setActive(idx: number) {
+function setActive(idx: string) {
     activeIdx.value = idx;
 }
 </script>
@@ -21,14 +23,14 @@ function setActive(idx: number) {
     <footer class="fixed left-0 bottom-0 w-full">
         <div class="bg-white footer-shadow grid grid-cols-5 mx-4 my-2 py-4 rounded-full">
             <div
-                v-for="(item, index) in items"
+                v-for="(item,index) in items"
                 :key="index"
                 class="flex relative justify-center items-center" 
             >
             <a
                 :href="item.href"
-                @click.prevent="setActive(index)"
-                :class="{ active: activeIdx === index }"
+                @click="setActive(item.href)"
+                :class="{ active: activeIdx === item.href }"
             >
                 <component :is="item.icon" :size="32" />
             </a>
