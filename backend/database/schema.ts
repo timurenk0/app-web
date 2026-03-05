@@ -25,7 +25,7 @@ export const foodEntry = pgTable("food_entry", {
   protein: doublePrecision("protein").notNull(),
   fat: doublePrecision("fat").notNull(),
   salt: doublePrecision("salt").notNull()
-}, (table) => [check("uom", sql`uom IN ('100g', '100ml')`)])
+}, (table) => [check("uom", sql`uom IN ('g', 'ml')`)])
 
 export const session = pgTable(
   "session",

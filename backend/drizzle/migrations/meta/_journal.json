@@ -50,6 +50,13 @@
       "when": 1772716443224,
       "tag": "0006_narrow_sage",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1772716641230,
+      "tag": "0007_condemned_talisman",
+      "breakpoints": true
     }
   ]
 }
