@@ -1,0 +1,1 @@
+ALTER TABLE "food_entry" ADD COLUMN "id" serial PRIMARY KEY NOT NULL;

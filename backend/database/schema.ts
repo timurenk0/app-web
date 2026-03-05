@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index, integer, date, doublePrecision, check } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, index, integer, doublePrecision, check, serial } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -16,7 +16,7 @@ export const user = pgTable("user", {
 });
 
 export const foodEntry = pgTable("food_entry", {
-  id: text("id").primaryKey(),
+  id: serial("id").primaryKey(),
   brand: text("brand"),
   product: text("product").notNull(),
   uom: text("uom").notNull(),
