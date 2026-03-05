@@ -5,12 +5,13 @@ import Button from "primevue/button";
 import { ChevronRight } from 'lucide-vue-next';
 
 
-const { username, email } = defineProps<{
+const { username, email, image } = defineProps<{
     username: string,
-    email: string
+    email: string,
+    image: string | null | undefined
 }>();
 
-console.log(username, email)
+const userImage = (image === undefined || image === null) ? "src/pfp/apple.jpg" : image;
 </script>
 
 <template>
@@ -20,7 +21,7 @@ console.log(username, email)
                 <div class="col-span-1">
                         <div class="w-16 h-16 rounded-full overflow-hidden mx-auto" id="image-shadow">
                             <Image
-                                src="https://primefaces.org/cdn/primevue/images/galleria/galleria10.jpg"
+                                :src="userImage"
                                 alt="User profile pic"
                                 class="flex w-full h-full object-cover"
                             />

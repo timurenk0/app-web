@@ -11,6 +11,9 @@ export const auth = async () => {
     try {
         const { data: session } = await authClient.getSession();
         if (!session) throw new Error("No session");
+        if (!session.user.image) {
+            session.user.image = "hello"
+        }
         return session.user;
     } catch (error) {
         const msg = error instanceof Error ? error.message : "Unknown error";

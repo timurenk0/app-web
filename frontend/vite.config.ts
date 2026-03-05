@@ -11,7 +11,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./"),
       "@c": path.resolve(__dirname, "src/components"),
       "@v": path.resolve(__dirname, "src/views"),
-      "@l": path.resolve(__dirname, "lib/")
+      "@l": path.resolve(__dirname, "lib/"),
+      "@p": path.resolve(__dirname, "public/")
     }
   }
 })
