@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { HomeIcon, TrendingUpIcon, UserIcon } from 'lucide-vue-next';
+import { HomeIcon, BookTextIcon, UserIcon } from 'lucide-vue-next';
 import { ref } from 'vue';
 
 const location = window.location.pathname;
@@ -7,7 +7,7 @@ console.log(location)
 const activeIdx = ref(location);
 
 const items = [
-    { icon: TrendingUpIcon, href: "/stats" },
+    { icon: BookTextIcon, href: "/recipes" },
     { icon: HomeIcon, href: "/" },
     { icon: UserIcon, href: "/user" },
 ]
