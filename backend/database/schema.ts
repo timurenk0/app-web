@@ -1,5 +1,5 @@
-import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
+import { relations, sql } from "drizzle-orm";
+import { pgTable, text, timestamp, boolean, index, integer, date, doublePrecision, check } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -14,6 +14,18 @@ export const user = pgTable("user", {
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
 });
+
+export const foodEntry = pgTable("food_entry", {
+  id: text("id").primaryKey(),
+  brand: text("brand"),
+  product: text("product").notNull(),
+  uom: text("uom").notNull(),
+  calories: integer("calories").notNull(),
+  carbs: doublePrecision("carbs").notNull(),
+  protein: doublePrecision("protein").notNull(),
+  fat: doublePrecision("fat").notNull(),
+  salt: doublePrecision("salt").notNull()
+}, (table) => [check("uom", sql`uom IN ('100g', '100ml')`)])
 
 export const session = pgTable(
   "session",
