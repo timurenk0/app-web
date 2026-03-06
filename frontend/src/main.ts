@@ -7,6 +7,7 @@ import { createVuetify } from "vuetify"
 import PrimeVue from "primevue/config";
 import Aura from "@primeuix/themes/aura"
 import { ToastService } from 'primevue'
+import { VueQueryPlugin } from "@tanstack/vue-query";
 import { OhVueIcon, addIcons } from 'oh-vue-icons'
 import { FcGoogle } from 'oh-vue-icons/icons'
 
@@ -26,5 +27,6 @@ createApp(App)
         }
     })
     .use(ToastService)
+    .use(VueQueryPlugin)
     .component("v-icon", OhVueIcon)
     .mount('#app')
