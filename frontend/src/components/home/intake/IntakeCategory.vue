@@ -3,6 +3,7 @@ import { ArrowDown, ArrowUp, Plus, Apple } from "lucide-vue-next";
 import Button from "primevue/button"
 import Panel from "primevue/panel";
 import { ref } from "vue";
+import IntakeForm from "./IntakeForm.vue";
 
 const toggled = ref(false);
 
@@ -50,9 +51,7 @@ const { title } = defineProps<{
         </template>
 
         <template #icons>
-            <Button v-on:click="addFood" variant="text">
-                <Plus />
-            </Button>
+            <IntakeForm />
         </template>
     
         <template #default>

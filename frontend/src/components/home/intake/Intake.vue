@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Card from "primevue/card";
 import IntakeCategory from "./IntakeCategory.vue";
+import IntakeForm from "./IntakeForm.vue";
 
 const cats = ["Breakfast", "Lunch", "Dinner", "Snacks"];
 
