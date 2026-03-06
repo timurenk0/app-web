@@ -2,6 +2,7 @@
 import type { ChartData, ChartOptions } from "chart.js";
 import Card from "primevue/card";
 import Chart from "primevue/chart";
+import UserWeightForm from "./UserWeightForm.vue";
 
 const today = new Date().getDay();
 const documentStyle = getComputedStyle(document.documentElement);
@@ -54,11 +55,14 @@ const chartOptions: ChartOptions = {
 
 <template>
     <Card class="w-full">
+        <template #title>
+            <p class="text-center">Weight Change Graph</p>
+        </template>
         <template #content>
             <Chart type="line" :data="chartData" :options="chartOptions" />
         </template>
         <template #footer>
-            <p class="text-center mt-6">Weight Change Graph</p>
+            <UserWeightForm />
         </template>
     </Card>
 </template>
