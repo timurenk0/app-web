@@ -24,6 +24,7 @@ const resolver = zodResolver(formSchema);
 const mutation = useMutation({
     mutationFn: async (weight: number) => {
         console.log(weight);
+        
         const res = await fetch("http://localhost:3000/api/weights", {
             method: "POST",
             body: JSON.stringify({ weight }),
