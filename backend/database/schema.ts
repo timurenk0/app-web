@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index, integer, doublePrecision, check, serial } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, index, integer, doublePrecision, check, serial, date } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import z from "zod";
 
@@ -31,7 +31,19 @@ export const foodEntry = pgTable("food_entry", {
 
 export const insertFoodEntrySchema = createInsertSchema(foodEntry).omit({
   id: true
-})
+});
+
+export const weightEntry = pgTable("weight_entry", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => user.id),
+  weight: doublePrecision("weight").notNull(),
+  uploadedAt: date("uploaded_at").notNull().defaultNow()
+}, (table) => [index("weight_user_idx").on(table.userId)]);
+
+export const insertWeightEntrySchema = createInsertSchema(weightEntry).omit({
+  id: true,
+  uploadedAt: true
+});
 
 export const session = pgTable(
   "session",
@@ -95,10 +107,20 @@ export const verification = pgTable(
 export type FoodEntry = typeof foodEntry.$inferSelect;
 export type InsertFoodEntry = z.infer<typeof insertFoodEntrySchema>;
 
+export type WeightEntry = typeof weightEntry.$inferSelect;
+export type InsertWeightEntry = z.infer<typeof insertWeightEntrySchema>;
+
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
 }));
+
+export const weightEntryRelations = relations(weightEntry, ({ one }) => ({
+  user: one(user, {
+    fields: [weightEntry.userId],
+    references: [user.id]
+  })
+}))
 
 export const sessionRelations = relations(session, ({ one }) => ({
   user: one(user, {
