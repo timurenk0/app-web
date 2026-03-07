@@ -1,4 +1,4 @@
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq, gt, sql } from "drizzle-orm";
 import { db } from "./db";
 import { foodEntry, FoodEntry, InsertWeightEntry, weightEntry, WeightEntry } from "./schema";
 
@@ -25,7 +25,7 @@ class Storage {
 
     async getWeightEntriesForUser(userId: string): Promise<WeightEntry[]> {
         try {
-            return await db.select().from(weightEntry).where(eq(weightEntry.userId, userId));
+            return await db.select().from(weightEntry).where(and(eq(weightEntry.userId, userId), sql`DATE(${weightEntry.uploadedAt}) >= CURRENT_DATE - INTERVAL '7 days'`));
         } catch (error) {
             throw error;
         }

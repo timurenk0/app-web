@@ -14,7 +14,35 @@ export async function GET(req: NextRequest) {
 
         const weights = await storage.getWeightEntriesForUser(session.user.id);
 
-        return res.json(weights, { status: 200 });
+        const today = new Date();
+        const result: { date: string; weight: number | null }[] = [];
+
+        // map existing entries
+        const weightMap = new Map(
+            weights.map((w) => [
+                new Date(w.uploadedAt).toISOString().slice(0, 10),
+                w.weight
+            ])
+        );
+
+        let lastWeight: number | null = null;
+
+        // build last 7 days
+        for (let i = 6; i >= 0; i--) {
+            const d = new Date(today);
+            d.setDate(today.getDate() - i);
+
+            const dateStr = d.toISOString().slice(0, 10);
+
+            if (weightMap.has(dateStr)) {
+                lastWeight = weightMap.get(dateStr)!;
+                result.push({ date: dateStr, weight: lastWeight });
+            } else {
+                result.push({ date: dateStr, weight: lastWeight });
+            }
+        }
+
+        return res.json(result, { status: 200 });
     } catch (error) {
         const msg = error instanceof Error ? error.message : "Unknown error";
         return res.json({ error: `Failed to fetch weight entries: ${msg}` }, { status: 500 });
