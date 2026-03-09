@@ -2,7 +2,12 @@
 import Footer from '@c/layout/Footer.vue';
 import Toast from "primevue/toast";
 import Layout from "@c/layout/Layout.vue";
-import { Suspense } from 'vue';
+import { computed, Suspense } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
+const hideFooter = computed(() => !route.meta.hideFooter);
 </script>
 
 <template>
@@ -16,7 +21,7 @@ import { Suspense } from 'vue';
         <h1>Loading page...</h1>
       </template>
     </Suspense>
-    <Footer />
+    <Footer v-if="hideFooter" />
   </Layout>
 </template>
 

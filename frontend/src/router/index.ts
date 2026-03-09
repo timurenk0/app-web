@@ -18,12 +18,14 @@ export const router = createRouter({
         {
             path: "/login",
             name: "Login",
-            component: ()=> import("@v/Login.vue")
+            component: ()=> import("@v/Login.vue"),
+            meta: { hideFooter: true }
         },
         {
             path: "/signup",
             name: "Sign Up",
-            component: ()=> import("@v/Signup.vue")
+            component: ()=> import("@v/Signup.vue"),
+            meta: { hideFooter: true }
         },
     ]
 });
