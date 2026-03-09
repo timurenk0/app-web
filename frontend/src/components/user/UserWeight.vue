@@ -31,8 +31,7 @@ const last7Days = Array.from ({ length: 7 }).map((_, i) => {
     return d;
 });
 
-console.log(data.value)
-const chartData = computed(() => {
+const chartData = computed((): ChartData => {
     const labels = last7Days.map(l => l.getDate());
 
     const weights = data.value ?? [];

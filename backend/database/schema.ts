@@ -33,9 +33,23 @@ export const insertFoodEntrySchema = createInsertSchema(foodEntry).omit({
   id: true
 });
 
+export const userFoodEntry = pgTable("user_food_entry", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+  foodEntryId: integer("food_entry_id").notNull().references(() => foodEntry.id, { onDelete: "cascade" }),
+  amount: integer("amount").notNull().default(100),
+  mealType: text("meal_type").notNull(),
+  uploadedAt: timestamp("uploaded_at").notNull().defaultNow()
+}, (table) => [check("meal_type", sql`meal_type IN ('breakfast', 'lunch', 'dinner', 'snack')`)]);
+
+export const insertUserFoodEntry = createInsertSchema(userFoodEntry).omit({
+  id: true,
+  uploadedAt: true
+});
+
 export const weightEntry = pgTable("weight_entry", {
   id: serial("id").primaryKey(),
-  userId: text("user_id").notNull().references(() => user.id),
+  userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
   weight: doublePrecision("weight").notNull(),
   uploadedAt: date("uploaded_at").notNull().defaultNow()
 }, (table) => [index("weight_user_idx").on(table.userId)]);
