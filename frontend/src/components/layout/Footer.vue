@@ -7,7 +7,7 @@ console.log(location)
 const activeIdx = ref(location);
 
 const items = [
-    { icon: BookTextIcon, href: "/recipes" },
+    { icon: BookTextIcon, href: "https://mealprepmanual.com/" },
     { icon: HomeIcon, href: "/" },
     { icon: UserIcon, href: "/user" },
 ]
@@ -27,6 +27,7 @@ function setActive(idx: string) {
             >
             <a
                 :href="item.href"
+                target="blank"
                 @click="setActive(item.href)"
                 :class="{ active: activeIdx === item.href }"
             >
