@@ -14,6 +14,7 @@ export async function GET(req: NextRequest) {
         if (!session) return res.json({ error: "UNAUTHORIZED" }, { status: 401 });
     
         const userFoods = await storage.getUserFoodEntriesForUser(session.user.id);
+        console.log(userFoods);
 
         return res.json(userFoods, { status: 200 });
     } catch (error) {

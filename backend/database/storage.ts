@@ -23,9 +23,42 @@ class Storage {
         }
     }
 
-    async getUserFoodEntriesForUser(userId: string): Promise<UserFoodEntry[]> {
+    async getUserFoodEntriesForUser(userId: string): Promise<(Partial<UserFoodEntry> & Partial<FoodEntry>)[]> {
         try {
-            return await db.select().from(userFoodEntry).where(eq(userFoodEntry.userId, userId));
+            return await db
+                    .select({
+                        id: userFoodEntry.id,
+                        amount: userFoodEntry.amount,
+                        mealType: userFoodEntry.mealType,
+                        product: foodEntry.product,
+                        brand: foodEntry.brand,
+                        calories: sql<number>`
+                            (${foodEntry.calories} * ${userFoodEntry.amount} / 100)
+                        `,
+                        carbs: sql<number>`
+                            (${foodEntry.carbs} * ${userFoodEntry.amount} / 100)
+                        `,
+                        protein: sql<number>`
+                            (${foodEntry.protein} * ${userFoodEntry.amount} / 100)
+                        `,
+                        fat: sql<number>`
+                            (${foodEntry.fat} * ${userFoodEntry.amount} / 100)
+                        `,
+                        salt: sql<number>`
+                            (${foodEntry.salt} * ${userFoodEntry.amount} / 100)
+                        `,
+                    })
+                    .from(userFoodEntry)
+                    .innerJoin(
+                        foodEntry,
+                        eq(userFoodEntry.foodEntryId, foodEntry.id)
+                    )
+                    .where(
+                        and(
+                            eq(userFoodEntry.userId, userId),
+                            sql`DATE(${userFoodEntry.uploadedAt}) = CURRENT_DATE`
+                        )
+                    );
         } catch (error) {
             throw error;
         }
