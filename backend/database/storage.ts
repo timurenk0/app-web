@@ -1,4 +1,4 @@
-import { and, eq, gt, sql } from "drizzle-orm";
+import { and, asc, desc, eq, gt, sql } from "drizzle-orm";
 import { db } from "./db";
 import { foodEntry, FoodEntry, InsertWeightEntry, weightEntry, WeightEntry } from "./schema";
 
@@ -25,7 +25,15 @@ class Storage {
 
     async getWeightEntriesForUser(userId: string): Promise<WeightEntry[]> {
         try {
-            return await db.select().from(weightEntry).where(and(eq(weightEntry.userId, userId), sql`DATE(${weightEntry.uploadedAt}) >= CURRENT_DATE - INTERVAL '7 days'`));
+            const weights = await db.select().from(weightEntry).where(and(eq(weightEntry.userId, userId), sql`DATE(${weightEntry.uploadedAt}) >= CURRENT_DATE - INTERVAL '7 days'`));
+            
+            if (weights.length < 1) {
+                const lastWeight = (await db.select().from(weightEntry).where(and(eq(weightEntry.userId, userId), sql`DATE(${weightEntry.uploadedAt}) < CURRENT_DATE - INTERVAL '7 days'`)).orderBy(desc(weightEntry.uploadedAt)))[0];
+                if (!lastWeight) return [];
+
+                return [lastWeight];
+            }
+            return weights;
         } catch (error) {
             throw error;
         }

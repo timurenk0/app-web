@@ -18,14 +18,15 @@ export async function GET(req: NextRequest) {
         const result: { date: string; weight: number | null }[] = [];
 
         // map existing entries
-        const weightMap = new Map(
+        const weightsMap = new Map(
             weights.map((w) => [
                 new Date(w.uploadedAt).toISOString().slice(0, 10),
                 w.weight
             ])
         );
 
-        let lastWeight: number | null = null;
+        // last or first next weight taken as reference for nulls
+        let anchorWeight: number = weights[0].weight;
 
         // build last 7 days
         for (let i = 6; i >= 0; i--) {
@@ -34,11 +35,11 @@ export async function GET(req: NextRequest) {
 
             const dateStr = d.toISOString().slice(0, 10);
 
-            if (weightMap.has(dateStr)) {
-                lastWeight = weightMap.get(dateStr)!;
-                result.push({ date: dateStr, weight: lastWeight });
+            if (weightsMap.has(dateStr)) {
+                anchorWeight = weightsMap.get(dateStr)!;
+                result.push({ date: dateStr, weight: anchorWeight });
             } else {
-                result.push({ date: dateStr, weight: lastWeight });
+                result.push({ date: dateStr, weight: anchorWeight });
             }
         }
 
