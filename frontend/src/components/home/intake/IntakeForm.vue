@@ -67,6 +67,8 @@ const mutation = useMutation({
     onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["http://localhost:3000/api/user-foods"] });
         visible.value = false;
+        selectedFood.value = null;
+        amount.value = 100;
         toast.add({ severity: "success", summary: "User food entry added successfully", life: 2000 });
     },
     onError: (err) => {
