@@ -27,7 +27,7 @@ function setActive(idx: string) {
             >
             <a
                 :href="item.href"
-                target="blank"
+                :target="index === 0 ? 'blank' : ''"
                 @click="setActive(item.href)"
                 :class="{ active: activeIdx === item.href }"
             >
