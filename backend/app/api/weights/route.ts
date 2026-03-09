@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
 
         const newWeightEntry = await storage.addWeightEntry(validWeightEntryData);
 
-        return res.json(newWeightEntry, { status: 200 });
+        return res.json(newWeightEntry, { status: 201});
     } catch (error) {
         const msg = error instanceof Error ? error.message : "Unknown error";
         return res.json({ error: `Failed to add weight record: ${msg}` }, { status: 500 });    

@@ -5,7 +5,7 @@ import Panel from "primevue/panel";
 import { ref } from "vue";
 import IntakeForm from "./IntakeForm.vue";
 
-const toggled = ref(false);
+const toggled = ref(true);
 
 /**
  * Custom helper function to change the status of the Panel component and switch between two custom icons
@@ -21,10 +21,11 @@ function addFood() {
 const { title } = defineProps<{
     title: string
 }>();
+
 </script>
 
 <template>
-    <Panel toggleable>
+    <Panel toggleable collapsed class="my-2">
         <template #header>
             <div class="flex flex-col">
                 <div class="flex items-center gap-2">
@@ -51,7 +52,7 @@ const { title } = defineProps<{
         </template>
 
         <template #icons>
-            <IntakeForm />
+            <IntakeForm :type="title" />
         </template>
     
         <template #default>

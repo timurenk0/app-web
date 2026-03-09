@@ -1,6 +1,6 @@
 import { and, asc, desc, eq, gt, sql } from "drizzle-orm";
 import { db } from "./db";
-import { foodEntry, FoodEntry, InsertWeightEntry, weightEntry, WeightEntry } from "./schema";
+import { foodEntry, FoodEntry, InsertUserFoodEntry, InsertWeightEntry, userFoodEntry, UserFoodEntry, weightEntry, WeightEntry } from "./schema";
 
 class Storage {
     constructor() {}
@@ -11,6 +11,33 @@ class Storage {
             return await db.select().from(foodEntry);
         } catch (error) {
             throw error
+        }
+    }
+
+    // ================== User Food Entry Methods =================
+    async getUserFoodEntries(): Promise<UserFoodEntry[]> {
+        try {
+            return await db.select().from(userFoodEntry)
+        } catch (error) {
+            throw error;            
+        }
+    }
+
+    async getUserFoodEntriesForUser(userId: string): Promise<UserFoodEntry[]> {
+        try {
+            return await db.select().from(userFoodEntry).where(eq(userFoodEntry.userId, userId));
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async addUserFoodEntry(insertUserFoodEntry: InsertUserFoodEntry): Promise<UserFoodEntry | undefined> {
+        try {
+            const [ufe] = await db.insert(userFoodEntry).values(insertUserFoodEntry).returning();
+        
+            return ufe;
+        } catch (error) {
+            throw error;
         }
     }
 

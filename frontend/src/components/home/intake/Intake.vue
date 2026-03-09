@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Card from "primevue/card";
 import IntakeCategory from "./IntakeCategory.vue";
-import IntakeForm from "./IntakeForm.vue";
 
 const cats = ["Breakfast", "Lunch", "Dinner", "Snacks"];
 
@@ -9,6 +8,7 @@ const cats = ["Breakfast", "Lunch", "Dinner", "Snacks"];
 
 <template>
     <Card class="w-full">
+        
         <template #content>
             <IntakeCategory
                 v-for="cat in cats"

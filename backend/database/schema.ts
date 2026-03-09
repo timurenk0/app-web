@@ -42,7 +42,7 @@ export const userFoodEntry = pgTable("user_food_entry", {
   uploadedAt: timestamp("uploaded_at").notNull().defaultNow()
 }, (table) => [check("meal_type", sql`meal_type IN ('breakfast', 'lunch', 'dinner', 'snack')`)]);
 
-export const insertUserFoodEntry = createInsertSchema(userFoodEntry).omit({
+export const insertUserFoodEntrySchema = createInsertSchema(userFoodEntry).omit({
   id: true,
   uploadedAt: true
 });
@@ -121,6 +121,9 @@ export const verification = pgTable(
 export type FoodEntry = typeof foodEntry.$inferSelect;
 export type InsertFoodEntry = z.infer<typeof insertFoodEntrySchema>;
 
+export type UserFoodEntry = typeof userFoodEntry.$inferSelect;
+export type InsertUserFoodEntry = z.infer<typeof insertUserFoodEntrySchema>;
+
 export type WeightEntry = typeof weightEntry.$inferSelect;
 export type InsertWeightEntry = z.infer<typeof insertWeightEntrySchema>;
 
@@ -128,6 +131,17 @@ export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
 }));
+
+export const userFoodEntryRelations = relations(userFoodEntry, ({ one }) => ({
+  user: one(user, {
+    fields: [userFoodEntry.userId],
+    references: [user.id]
+  }),
+  foodEntry: one(foodEntry, {
+    fields: [userFoodEntry.foodEntryId],
+    references: [foodEntry.id]
+  })
+})) 
 
 export const weightEntryRelations = relations(weightEntry, ({ one }) => ({
   user: one(user, {
