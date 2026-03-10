@@ -4,19 +4,25 @@ import BarChart from './bar/BarChart.vue';
 import Card from "primevue/card";
 import { useQuery } from '@tanstack/vue-query';
 import type { UserStats } from '@l/types';
-import { computed } from 'vue';
+import { computed, toRef } from 'vue';
 
+
+const props = defineProps<{
+    date: string
+}>();
+
+const date = toRef(props, "date");
 
 const { data, isLoading } = useQuery<UserStats>({
-    queryKey: ["stats"],
+    queryKey: ["stats", date],
     queryFn: async () => {
-        const res = await fetch("http://localhost:3000/api/stats", {
+        const res = await fetch(`http://localhost:3000/api/stats?date=${date.value}`, {
             method: "GET",
             credentials: "include"
         });
 
         if (!res.ok) throw new Error("Failed to fetch user stats");
-        return await res.json();
+        return res.json();
     }
 });
 

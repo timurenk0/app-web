@@ -6,14 +6,14 @@ class Storage {
     constructor() {}
 
     // ==================== User Stas Methods =====================
-    async getUserStats(userId: string): Promise<{
+    async getUserStats(userId: string, date: string): Promise<{
         totalCalories: number,
         totalProtein: number,
         totalCarbs: number,
         totalFat: number,
     }> {
         try {
-            const userFoods = await this.getUserFoodEntriesForUser(userId);
+            const userFoods = await this.getUserFoodEntriesForUser(userId, date);
         
             const totalCalories = userFoods.reduce((acc, item) => acc+item.calories, 0);
             const totalProtein = userFoods.reduce((acc, item) => acc+item.protein, 0);
@@ -44,7 +44,7 @@ class Storage {
         }
     }
 
-    async getUserFoodEntriesForUser(userId: string): Promise<{
+    async getUserFoodEntriesForUser(userId: string, date: string = new Date().toISOString().slice(0, 10)): Promise<{
         id: number,
         amount: number,
         mealType: string,
@@ -90,7 +90,7 @@ class Storage {
                     .where(
                         and(
                             eq(userFoodEntry.userId, userId),
-                            sql`DATE(${userFoodEntry.uploadedAt}) = CURRENT_DATE`
+                            sql`DATE(${userFoodEntry.uploadedAt}) = DATE(${new Date(date)})`
                         )
                     );
         } catch (error) {

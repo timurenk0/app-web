@@ -10,7 +10,14 @@ export async function GET(req: NextRequest) {
         });
         if (!session) return res.json({ error: "UNAUTHORIZED" }, { status: 401 });
 
-        const stats = await storage.getUserStats(session.user.id);
+        const date = req.nextUrl.searchParams.get("date");
+        if (date) {
+            if (isNaN(Date.parse(date))) return res.json({ error: "Invalid date format" }, { status: 400 });
+        }
+
+        console.log(date);
+
+        const stats = await storage.getUserStats(session.user.id, date || new Date().toISOString().slice(0, 10));
 
         return res.json(stats, { status: 200 });
     } catch (error) {
