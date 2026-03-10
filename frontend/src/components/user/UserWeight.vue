@@ -84,7 +84,7 @@ const chartOptions: ChartOptions = {
 <template>
     <Card class="w-full">
         <template #title>
-            <p class="text-center">Weight Change Graph</p>
+            <h2 class="mb-2">Weight Change Graph</h2>
         </template>
         <template #content>
             <span v-if="isLoading">Loading...</span>
