@@ -51,13 +51,16 @@ const { title, foods } = defineProps<{
         </template>
     
         <template #default>
-            <div v-for="(f, i) in foods" :key="i" class="grid grid-cols-10 bg-main/10 rounded-md my-2 py-1">
+            <div v-for="f in foods" :key="f.id" class="grid grid-cols-10 bg-main/10 rounded-md my-2 py-1">
                 <div class="col-span-1">
                 </div>
-                <div class="col-span-8 font-semibold">
+                <div class="col-span-7 font-semibold">
                     <p class="text-xs text-ghost-text">{{ f.brand }}</p>
                     <p>{{ f.product }}</p>
                     <p class="font-normal text-xs text-main mt-1 flex justify-between">{{ f.amount }} {{ f.uom }}</p>
+                </div>
+                <div class="col-span-1 my-auto">
+                    <p class="font-bold text-sm">{{ f.calories }}</p>
                 </div>
                 <div class="my-auto">
                     <ChevronRight />

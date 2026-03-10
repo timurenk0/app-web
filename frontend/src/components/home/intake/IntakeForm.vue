@@ -100,7 +100,7 @@ const food = computed(() => {
     <Button @click="visible = true" variant="text">
         <Plus />
     </Button>
-    <Dialog v-model:visible="visible" modal header="What did you eat today?">
+    <Dialog v-model:visible="visible" modal :header="`What did you have for ${type.toLowerCase()} today?`">
         <Form :resolver="resolver" @submit="onSubmit">
             <div class="flex flex-col gap-4">
                 <Select name="foodEntryId" v-model="selectedFood" :options="data" option-value="id" filter placeholder="Select food" :loading="isLoading">

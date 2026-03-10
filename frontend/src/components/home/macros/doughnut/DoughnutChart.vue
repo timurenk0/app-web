@@ -27,7 +27,7 @@ const data = [consumed, totalCalories-consumed]
 const chartData = {
     labels: ["Consumed", "Remaining"],
     datasets: [{
-        data,
+        data: consumed > totalCalories ? [totalCalories, 0] : data,
         backgroundColor: ["#27a433", "#e5e5e5"],
         borderWidth: 0,
         spacing: 8,
@@ -45,10 +45,8 @@ const chartOptions = {
     <div class="relative flex justify-center h-[200px] aspect-auto">
         <Doughnut :options="chartOptions" :data="chartData" />
         <div class="absolute top-20 text-center cursor-pointer" v-on:click="toggleChartView">
-            <p class="text-text text-4xl font-semibold">{{ chartView === "consumed" ? consumed : totalCalories-consumed}}<span class="text-xs">/{{ totalCalories }}</span></p>
+            <p :class="`text-4xl font-semibold ${consumed > totalCalories && 'text-red-600/75'}`">{{ chartView === "consumed" ? consumed : totalCalories-consumed}}<span class="text-xs text-text">/{{ totalCalories }}</span></p>
             <p class="text-ghost-text">{{ chartView === "consumed" ? "Consumed" : "Remaining" }}</p>
         </div>
-        <!-- <p class="absolute left-1 top-57">0</p>
-        <p class="absolute right-1 top-57">{{ totalCalories }}</p> -->
     </div>
 </template>
