@@ -172,7 +172,7 @@ const food = computed(() => {
                             </div>
 
                             <div class="flex justify-between border-t border-black pt-1 px-2">
-                                <span class="font-semibold">Fat</span>
+                                <span class="font-semibold">Salt</span>
                                 <span>{{ Math.round(food.salt * amount / 100) }} g</span>
                             </div>
                         </div>

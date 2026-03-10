@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ArrowDown, ArrowUp, Plus, Apple } from "lucide-vue-next";
-import Button from "primevue/button"
+import { ArrowDown, ArrowUp, ChevronRight } from "lucide-vue-next";
 import Panel from "primevue/panel";
 import { ref } from "vue";
 import IntakeForm from "./IntakeForm.vue";
@@ -14,12 +13,9 @@ function toggle () {
     toggled.value = !toggled.value;
 }
 
-function addFood() {
-    console.log("food added")
-}
-
-const { title } = defineProps<{
-    title: string
+const { title, foods } = defineProps<{
+    title: string,
+    foods: any[]
 }>();
 
 </script>
@@ -29,13 +25,12 @@ const { title } = defineProps<{
         <template #header>
             <div class="flex flex-col">
                 <div class="flex items-center gap-2">
-                    <Apple />
                     <span class="card-title text-xl">{{ title }}</span>
                 </div>
 
                 <div class="w-full">
                     <hr class="text-ghost my-1">
-                    <p class="text-ghost-text text-sm">2pcs (210kcal)</p>
+                    <p v-if="foods.length > 0" class="text-ghost-text text-sm">{{ foods.length }}pcs ({{ foods.reduce((a, b) => a.calories+b.calories)}} kcal)</p>
                 </div>
             </div>
         </template>
@@ -56,8 +51,17 @@ const { title } = defineProps<{
         </template>
     
         <template #default>
-            <div class="mt-2">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores molestias beatae consequuntur fugiat, iusto aperiam quas, dignissimos amet officia debitis exercitationem! Repellendus numquam dolore blanditiis soluta voluptate sed, est nobis?
+            <div v-for="(f, i) in foods" :key="i" class="grid grid-cols-10 bg-main/10 rounded-md my-2 py-1">
+                <div class="col-span-1">
+                </div>
+                <div class="col-span-8 font-semibold">
+                    <p class="text-xs text-ghost-text">{{ f.brand }}</p>
+                    <p>{{ f.product }}</p>
+                    <p class="font-normal text-xs text-main mt-1 flex justify-between">{{ f.amount }} {{ f.uom }}</p>
+                </div>
+                <div class="my-auto">
+                    <ChevronRight />
+                </div>
             </div>
         </template>
     </Panel>

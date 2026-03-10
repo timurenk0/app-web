@@ -29,6 +29,7 @@ class Storage {
                     .select({
                         id: userFoodEntry.id,
                         amount: userFoodEntry.amount,
+                        uom: foodEntry.uom,
                         mealType: userFoodEntry.mealType,
                         product: foodEntry.product,
                         brand: foodEntry.brand,
