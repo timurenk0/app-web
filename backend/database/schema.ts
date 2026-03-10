@@ -40,7 +40,7 @@ export const userFoodEntry = pgTable("user_food_entry", {
   amount: integer("amount").notNull().default(100),
   mealType: text("meal_type").notNull(),
   uploadedAt: timestamp("uploaded_at").notNull().defaultNow()
-}, (table) => [check("meal_type", sql`meal_type IN ('breakfast', 'lunch', 'dinner', 'snack')`)]);
+}, (table) => [check("meal_type", sql`meal_type IN ('breakfast', 'lunch', 'dinner', 'snacks')`)]);
 
 export const insertUserFoodEntrySchema = createInsertSchema(userFoodEntry).omit({
   id: true,

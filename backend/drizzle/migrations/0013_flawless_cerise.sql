@@ -1,0 +1,2 @@
+ALTER TABLE "user_food_entry" DROP CONSTRAINT "meal_type";--> statement-breakpoint
+ALTER TABLE "user_food_entry" ADD CONSTRAINT "meal_type" CHECK (meal_type IN ('breakfast', 'lunch', 'dinner', 'snacks'));

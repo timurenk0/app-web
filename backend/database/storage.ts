@@ -5,6 +5,27 @@ import { foodEntry, FoodEntry, InsertUserFoodEntry, InsertWeightEntry, userFoodE
 class Storage {
     constructor() {}
 
+    // ==================== User Stas Methods =====================
+    async getUserStats(userId: string): Promise<{
+        totalCalories: number,
+        totalProtein: number,
+        totalCarbs: number,
+        totalFat: number,
+    }> {
+        try {
+            const userFoods = await this.getUserFoodEntriesForUser(userId);
+        
+            const totalCalories = userFoods.reduce((acc, item) => acc+item.calories, 0);
+            const totalProtein = userFoods.reduce((acc, item) => acc+item.protein, 0);
+            const totalCarbs = userFoods.reduce((acc, item) => acc+item.carbs, 0);
+            const totalFat = userFoods.reduce((acc, item) => acc+item.fat, 0);
+
+            return { totalCalories, totalProtein, totalCarbs, totalFat };
+        } catch (error) {
+            throw error;
+        }
+    }
+
     // ==================== Food Entry Methods ==================== 
     async getFoods(): Promise<FoodEntry[]> {
         try {
@@ -23,14 +44,26 @@ class Storage {
         }
     }
 
-    async getUserFoodEntriesForUser(userId: string): Promise<(Partial<UserFoodEntry> & Partial<FoodEntry>)[]> {
+    async getUserFoodEntriesForUser(userId: string): Promise<{
+        id: number,
+        amount: number,
+        mealType: string,
+        uom: string,
+        product: string,
+        brand: string | null,
+        calories: number,
+        carbs: number,
+        protein: number,
+        fat: number,
+        salt: number
+    }[]> {
         try {
             return await db
                     .select({
                         id: userFoodEntry.id,
                         amount: userFoodEntry.amount,
-                        uom: foodEntry.uom,
                         mealType: userFoodEntry.mealType,
+                        uom: foodEntry.uom,
                         product: foodEntry.product,
                         brand: foodEntry.brand,
                         calories: sql<number>`
