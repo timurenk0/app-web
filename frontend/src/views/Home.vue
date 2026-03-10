@@ -14,6 +14,6 @@ function handleDate(day: string) {
     <section class="flex flex-col items-center gap-4">
         <Calendar @date-selected="handleDate" />
         <Macros :date="date" />
-        <Intake />
+        <Intake :date="date" />
     </section>
 </template>

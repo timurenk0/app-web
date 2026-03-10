@@ -10,10 +10,14 @@ export async function GET(req: NextRequest) {
         const session = await auth.api.getSession({
             headers: req.headers
         });
-        
         if (!session) return res.json({ error: "UNAUTHORIZED" }, { status: 401 });
     
-        const userFoods = await storage.getUserFoodEntriesForUser(session.user.id);
+        const date = req.nextUrl.searchParams.get("date");
+        if (date) {
+            if (isNaN(Date.parse(date))) return res.json({ error: "Invalid date format" }, { status: 400 });
+        }
+
+        const userFoods = await storage.getUserFoodEntriesForUser(session.user.id, date || new Date().toISOString().slice(0, 10));
         console.log(userFoods);
 
         return res.json(userFoods, { status: 200 });

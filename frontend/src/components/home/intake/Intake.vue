@@ -3,15 +3,20 @@ import Card from "primevue/card";
 import IntakeCategory from "./IntakeCategory.vue";
 import { useQuery } from "@tanstack/vue-query";
 import type { UserFoodEntry } from "@l/types";
-import { computed } from "vue";
+import { computed, toRef } from "vue";
 
 const cats = ["Breakfast", "Lunch", "Dinner", "Snacks"];
 
 
+const props = defineProps<{
+    date: string
+}>();
+const date = toRef(props, "date");
+
 const { data, isLoading } = useQuery<UserFoodEntry[]>({
-    queryKey: ["user-foods"],
+    queryKey: ["user-foods", date],
     queryFn: async () => {
-        const res = await fetch("http://localhost:3000/api/user-foods", {
+        const res = await fetch(`http://localhost:3000/api/user-foods?date=${date.value}`, {
             method: "GET",
             credentials: "include"
         });
