@@ -30,7 +30,7 @@ const { title, foods } = defineProps<{
 
                 <div class="w-full">
                     <hr class="text-ghost my-1">
-                    <p v-if="foods.length > 0" class="text-ghost-text text-sm">{{ foods.length }}pcs ({{ foods.reduce((a, b) => a.calories+b.calories)}} kcal)</p>
+                    <p v-if="foods.length > 0" class="text-ghost-text text-sm">{{ foods.length }}pcs ({{ foods.reduce((a, b) => a+b.calories, 0)}} kcal)</p>
                 </div>
             </div>
         </template>

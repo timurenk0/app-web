@@ -23,3 +23,10 @@ export type UserFoodEntry = {
     fat: number,
     salt: number,
 }
+
+export type UserStats = {
+    totalProtein: number,
+    totalCarbs: number,
+    totalFat: number,
+    totalCalories: number
+}
