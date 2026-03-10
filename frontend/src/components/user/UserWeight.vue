@@ -28,16 +28,14 @@ const today = new Date();
 const last7Days = Array.from ({ length: 7 }).map((_, i) => {
     const d = new Date();
     d.setDate(today.getDate() - (6-i)); 
-    return d;
+    return d.getDate();
 });
 
 const chartData = computed((): ChartData => {
-    const labels = last7Days.map(l => l.getDate());
-
     const weights = data.value ?? [];
 
     return {
-        labels,
+        labels: last7Days,
         datasets: [
             {
                 label: "Weight",
