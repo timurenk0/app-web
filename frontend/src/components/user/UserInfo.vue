@@ -27,8 +27,8 @@ const userImage = (image === undefined || image === null) ? "src/pfp/apple.jpg" 
 <template>
     <Panel toggleable collapsed class="w-full">
         <template #header>
-            <div class="grid grid-cols-4 py-2">
-                <div class="col-span-1">
+            <div class="grid grid-cols-5 py-2">
+                <div class="col-span-2">
                         <div class="w-16 h-16 rounded-full overflow-hidden mx-auto" id="image-shadow">
                             <Image
                                 :src="userImage"
@@ -38,7 +38,7 @@ const userImage = (image === undefined || image === null) ? "src/pfp/apple.jpg" 
                         </div>
                         <p class="text-xs text-center mt-1 underline">Change photo</p>
                 </div>
-                <div class="col-span-2 my-auto mx-auto">
+                <div class="col-span-3 my-auto mx-auto">
                     <h2 class="text-main text-lg font-semibold">{{ username }}</h2>
                     <p class="text-xs text-ghost-text">{{ email }}</p>
                 </div>
