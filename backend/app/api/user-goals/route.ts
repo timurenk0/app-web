@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
     }
 };
 
-export async function PUT(req: NextRequest) {
+export async function POST(req: NextRequest) {
     try {
         const session = await auth.api.getSession({
             headers: req.headers
