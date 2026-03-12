@@ -2,8 +2,18 @@
 import Image from 'primevue/image';
 import Card from 'primevue/card';
 import Button from "primevue/button";
-import { ChevronRight } from 'lucide-vue-next';
+import { ArrowRight, ArrowUp, ChevronRight } from 'lucide-vue-next';
+import { Panel } from 'primevue';
+import UserWeight from './UserWeight.vue';
+import UserMacrosSplitGraph from './UserMacrosSplitGraph.vue';
+import { ref } from 'vue';
 
+
+const toggled = ref(false);
+
+const toggle = () => {
+    toggled.value = !toggled.value;
+}
 
 const { username, email, image } = defineProps<{
     username: string,
@@ -15,9 +25,9 @@ const userImage = (image === undefined || image === null) ? "src/pfp/apple.jpg" 
 </script>
 
 <template>
-    <Card class="w-full">
-        <template #content>
-            <div class="grid grid-cols-4">
+    <Panel toggleable collapsed class="w-full">
+        <template #header>
+            <div class="grid grid-cols-4 py-2">
                 <div class="col-span-1">
                         <div class="w-16 h-16 rounded-full overflow-hidden mx-auto" id="image-shadow">
                             <Image
@@ -32,14 +42,23 @@ const userImage = (image === undefined || image === null) ? "src/pfp/apple.jpg" 
                     <h2 class="text-main text-lg font-semibold">{{ username }}</h2>
                     <p class="text-xs text-ghost-text">{{ email }}</p>
                 </div>
-                <div class="col-span-1 my-auto ml-auto">
-                    <Button severity="secondary" class="h-8 w-10">
-                        <ChevronRight />
-                    </Button>
-                </div>
             </div>
         </template>
-    </Card>
+        <template #toggleicon>
+            <div @click="toggle" v-if="toggled">
+                <ArrowUp />
+            </div>
+            <div @click="toggle" v-else>
+                <ArrowRight />
+            </div>
+        </template>
+        <template #default>
+            <div class="flex flex-col gap-2 mt-6">
+                <UserWeight />
+                <UserMacrosSplitGraph />
+            </div>
+        </template>
+    </Panel>
 </template>
 
 <style scoped>

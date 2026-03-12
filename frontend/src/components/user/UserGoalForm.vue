@@ -62,7 +62,7 @@ const onSubmit = async (event: FormSubmitEvent) => {
 </script>
 
 <template>
-    <Button @click="visible = true" fluid class="mt-4">
+    <Button @click="visible = true" fluid class="mt-4" >
         <p class="w-full text-center">
             + Add goal record
         </p>

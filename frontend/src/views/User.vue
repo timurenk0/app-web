@@ -14,8 +14,8 @@ const signOut = async () => { await logOut(); window.location.reload() }
 <template>
     <section class="flex flex-col items-center gap-4">
         <UserInfo :username="user.name" :email="user.email" :image="user.image" />
-        <UserWeight />
-        <UserMacrosSplitGraph />
+        <!-- <UserWeight />
+        <UserMacrosSplitGraph /> -->
         <Button fluid severity="danger" v-on:click="signOut">Logout</Button>
     </section>
 </template>
