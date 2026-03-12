@@ -51,6 +51,8 @@ export const userGoalEntry = pgTable("user_goal_entry", {
   id: serial("id").primaryKey(),
   userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
   goalWeight: doublePrecision("goal_weight").notNull(),
+  height: doublePrecision("height").notNull(),
+  age: integer("age").notNull(),
   activityLevel: text("activity_level").notNull(),
   uploadedAt: timestamp("uploaded_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow()

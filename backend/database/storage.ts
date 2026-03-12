@@ -18,13 +18,16 @@ class Storage {
     }> {
         try {
             const userFoods = await this.getUserFoodEntriesForUser(userId, date);
-            const userWeight = await this.getWeightEntryForUser(userId);
             const goalWeight = await this.getUserGoalEntryForUser(userId);
+            const userWeight = await this.getWeightEntryForUser(userId);
+            if (!userWeight) {
+                throw new Error("Please enter your current weight first");
+            }
 
             const activityMultiplier: Record<string, number> = {
                 low: 1.2,
-                moderate: 1.5,
-                high: 1.8
+                moderate: 1.4,
+                high: 1.6
             };
 
             const consumedCalories = userFoods.reduce((acc, item) => acc+item.calories, 0);
@@ -32,13 +35,11 @@ class Storage {
             const consumedCarbs = userFoods.reduce((acc, item) => acc+item.carbs, 0);
             const consumedFat = userFoods.reduce((acc, item) => acc+item.fat, 0);
 
-            const maintenanceCalories = goalWeight ? goalWeight.goalWeight* 24 : 0;
-            const activityCalories = maintenanceCalories * (goalWeight ? activityMultiplier[goalWeight.activityLevel] : 0);
-            const adjustment = ((goalWeight ? goalWeight.goalWeight : 0) - (userWeight ? userWeight.weight : 0)) * 50;
-            const totalCalories = activityCalories + adjustment;
-            const totalCarbs = totalCalories * 0.45;
-            const totalProtein = totalCalories * 0.3;
-            const totalFat = totalCalories * 0.25;
+            const maintainCalories = goalWeight ? ((10 * goalWeight.goalWeight) + (6.25 * goalWeight.height) - (goalWeight.age * 5) + 5)*activityMultiplier[goalWeight.activityLevel] : 0;
+            const totalCalories = parseInt((goalWeight ? goalWeight.goalWeight > userWeight.weight ? maintainCalories * 1.2 : maintainCalories*0.8 : 0).toFixed(0));
+            const totalProtein = parseFloat((goalWeight ? goalWeight.goalWeight * 1.8 : 0).toFixed(1));
+            const totalFat = parseFloat((goalWeight ? goalWeight.goalWeight * 0.8 : 0).toFixed(1));
+            const totalCarbs = parseFloat(((totalCalories - totalProtein * 4 - totalFat * 9)/4).toFixed(1));
 
             return {
                 totalCalories,

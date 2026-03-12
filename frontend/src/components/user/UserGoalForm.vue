@@ -14,8 +14,9 @@ import { zodResolver } from "@primevue/forms/resolvers/zod";
 
 const formSchema = z.object({
     goalWeight: z.number().min(1, { error: "Goal weight value is required" }),
-    currentWeight: z.number().min(1, { error: "Current weight value is requried" }),
-    activityLevel: z.string().min(1, { error: "Activity level is required" })
+    activityLevel: z.string().min(1, { error: "Activity level is required" }),
+    age: z.number().min(1, { error: "Age value is required" }),
+    height: z.number().min(1, { error: "Heigh value is required" })
 });
 type UserGoalFormValues = z.infer<typeof formSchema>;
     
@@ -69,8 +70,9 @@ const onSubmit = async (event: FormSubmitEvent) => {
     <Dialog v-model:visible="visible" modal header="Add end-goal record" class="w-full mx-4">
         <Form :resolver @submit="onSubmit">
             <div class="flex flex-col gap-4">
-                <InputNumber name="goalWeight" fluid :suffix="` kg`" placeholder="Enter goal weight (kg)" />
-                <InputNumber name="currentWeight" fluid :suffix="` kg`" placeholder="Enter current weight (kg)" />
+                <InputNumber :min="1" name="goalWeight" fluid :suffix="` kg`" placeholder="Enter goal weight (kg)" />
+                <InputNumber :min="1" :max="100" name="age" fluid placeholder="Enter age" />
+                <InputNumber :min="1" :max="250" name="height" fluid :suffix="` cm`" placeholder="Enter height (cm)" />
                 <Select name="activityLevel" :options="activityLevels" placeholder="Select activity level"></Select>
                 <div class="flex justify-end gap-2 mt-4">
                     <Button type="button" variant="outlined" severity="secondary">Cancel</Button>

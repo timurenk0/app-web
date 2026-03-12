@@ -29,10 +29,6 @@ export async function POST(req: NextRequest) {
 
         const body = await req.json();
 
-        // Post current user weight entry
-        const validUserWeightData = insertWeightEntrySchema.parse({ weight: body.currentWeight, userId: session.user.id });
-        const newUserWeightEntry = await storage.addWeightEntry(validUserWeightData);
-        if (!newUserWeightEntry) return res.json({ error: "Failed to post user weight entry" }, { status: 500 });
 
         const validUserGoalData = insertUserGoalEntrySchema.parse({ ...body, userId: session.user.id });
         const newUserGoalEntry = await storage.addUserGoalEntry(validUserGoalData);
