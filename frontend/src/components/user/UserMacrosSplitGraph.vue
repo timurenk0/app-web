@@ -71,6 +71,7 @@ const chartOptions: ChartOptions = {
             </div>
         </template>
         <template v-if="!isLoading" #content>
+            <p v-if="isLoading">Loading macros data...</p>
             <Chart type="pie" :data="chartData" :options="chartOptions" class="h-[200px]" />
         </template>
     </Card>
