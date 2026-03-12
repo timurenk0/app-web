@@ -1,4 +1,4 @@
-import { insertUserGoalEntrySchema } from "@/database/schema";
+import { insertUserGoalEntrySchema, insertWeightEntrySchema } from "@/database/schema";
 import storage from "@/database/storage";
 import { auth } from "@/lib/auth";
 import { NextRequest, NextResponse as res } from "next/server";
@@ -27,9 +27,14 @@ export async function POST(req: NextRequest) {
         });
         if (!session) return res.json({ error: "UNAUTHORIZED" }, { status: 401 });
 
-        const body = await req.json(); 
+        const body = await req.json();
 
-        const validUserGoalData = insertUserGoalEntrySchema.parse(body);
+        // Post current user weight entry
+        const validUserWeightData = insertWeightEntrySchema.parse({ weight: body.currentWeight, userId: session.user.id });
+        const newUserWeightEntry = await storage.addWeightEntry(validUserWeightData);
+        if (!newUserWeightEntry) return res.json({ error: "Failed to post user weight entry" }, { status: 500 });
+
+        const validUserGoalData = insertUserGoalEntrySchema.parse({ ...body, userId: session.user.id });
 
         const newUserGoalEntry = await storage.addUserGoalEntry(validUserGoalData);
 

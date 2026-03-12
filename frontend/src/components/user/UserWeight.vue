@@ -5,6 +5,7 @@ import Chart from "primevue/chart";
 import UserWeightForm from "./UserWeightForm.vue";
 import { useQuery } from "@tanstack/vue-query";
 import { computed } from "vue";
+import UserGoalForm from "./UserGoalForm.vue";
 
 
 const { data, isLoading } = useQuery<{ date: string, weight: number }[]>({
@@ -90,6 +91,7 @@ const chartOptions: ChartOptions = {
         </template>
         <template #footer>
             <UserWeightForm />
+            <UserGoalForm />
         </template>
     </Card>
 </template>
