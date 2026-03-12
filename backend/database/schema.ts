@@ -47,6 +47,20 @@ export const insertUserFoodEntrySchema = createInsertSchema(userFoodEntry).omit(
   uploadedAt: true
 });
 
+export const userGoalEntry = pgTable("user_goal_entry", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+  goalWeight: doublePrecision("goal_weight").notNull(),
+  activityLevel: text("activity_level").notNull(),
+  uploadedAt: timestamp("uploaded_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow()
+}, (table) => [check("activity_level_check", sql`activity_level IN ('low', 'moderate', 'high')`)]);
+
+export const insertUserGoalEntry = createInsertSchema(userGoalEntry).omit({
+  id: true,
+  uploadedAt: true
+});
+
 export const weightEntry = pgTable("weight_entry", {
   id: serial("id").primaryKey(),
   userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
@@ -124,6 +138,9 @@ export type InsertFoodEntry = z.infer<typeof insertFoodEntrySchema>;
 export type UserFoodEntry = typeof userFoodEntry.$inferSelect;
 export type InsertUserFoodEntry = z.infer<typeof insertUserFoodEntrySchema>;
 
+export type UserGoalEntry = typeof userGoalEntry.$inferSelect;
+export type InsertUserGoalEntry = z.infer<typeof insertUserGoalEntry>;
+
 export type WeightEntry = typeof weightEntry.$inferSelect;
 export type InsertWeightEntry = z.infer<typeof insertWeightEntrySchema>;
 
@@ -141,7 +158,14 @@ export const userFoodEntryRelations = relations(userFoodEntry, ({ one }) => ({
     fields: [userFoodEntry.foodEntryId],
     references: [foodEntry.id]
   })
-})) 
+}));
+
+export const userGoalEntryRelations = relations(userGoalEntry, ({ one }) => ({
+  user: one(user, {
+    fields: [userGoalEntry.userId],
+    references: [user.id]
+  })
+}));
 
 export const weightEntryRelations = relations(weightEntry, ({ one }) => ({
   user: one(user, {
