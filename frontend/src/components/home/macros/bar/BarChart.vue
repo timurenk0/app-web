@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ProgressBar from 'primevue/progressbar';
+import { computed } from "vue";
 
 const { title, color, consumed, total } = defineProps<{
     title: string,
@@ -8,7 +9,7 @@ const { title, color, consumed, total } = defineProps<{
     total: number
 }>();
 
-const ratio = consumed/total*100;
+const ratio = computed(() => (consumed/total*100));
 console.log(color)
 
 </script>

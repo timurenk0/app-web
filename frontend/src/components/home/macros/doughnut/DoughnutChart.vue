@@ -6,7 +6,7 @@ import {
     Tooltip,
     ArcElement
 } from "chart.js"
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 ChartJS.register(Title, Tooltip, ArcElement)
 
@@ -21,19 +21,19 @@ const { totalCalories, consumed } = defineProps<{
     totalCalories: number,
     consumed: number;
 }>();
-const data = [consumed, totalCalories-consumed]
+const data = computed(() => ([consumed, totalCalories-consumed]));
 
 
-const chartData = {
+const chartData = computed(() => ({
     labels: ["Consumed", "Remaining"],
     datasets: [{
-        data: consumed > totalCalories ? [totalCalories, 0] : data,
+        data: consumed > totalCalories ? [totalCalories, 0] : data.value,
         backgroundColor: ["#27a433", "#e5e5e5"],
         borderWidth: 0,
         spacing: 8,
         borderRadius: [20, 20],
     }],
-}
+}));
 const chartOptions = {
     rotation: -112.5,
     circumference: 225,
