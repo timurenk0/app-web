@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import Image from 'primevue/image';
-import Card from 'primevue/card';
-import Button from "primevue/button";
-import { ArrowRight, ArrowUp, ChevronRight } from 'lucide-vue-next';
+import { ArrowRight, ArrowUp } from 'lucide-vue-next';
 import { Panel } from 'primevue';
 import UserWeight from './UserWeight.vue';
 import UserMacrosSplitGraph from './UserMacrosSplitGraph.vue';
