@@ -7,20 +7,49 @@ class Storage {
 
     // ==================== User Stas Methods =====================
     async getUserStats(userId: string, date: string): Promise<{
+        consumedCalories: number,
         totalCalories: number,
+        consumedProtein: number,
         totalProtein: number,
+        consumedCarbs: number,
         totalCarbs: number,
-        totalFat: number,
+        consumedFat: number,
+        totalFat: number
     }> {
         try {
             const userFoods = await this.getUserFoodEntriesForUser(userId, date);
-        
-            const totalCalories = userFoods.reduce((acc, item) => acc+item.calories, 0);
-            const totalProtein = userFoods.reduce((acc, item) => acc+item.protein, 0);
-            const totalCarbs = userFoods.reduce((acc, item) => acc+item.carbs, 0);
-            const totalFat = userFoods.reduce((acc, item) => acc+item.fat, 0);
+            const userWeight = await this.getWeightEntryForUser(userId);
+            const goalWeight = await this.getUserGoalEntryForUser(userId);
 
-            return { totalCalories, totalProtein, totalCarbs, totalFat };
+            const activityMultiplier: Record<string, number> = {
+                low: 1.2,
+                moderate: 1.5,
+                high: 1.8
+            };
+
+            const consumedCalories = userFoods.reduce((acc, item) => acc+item.calories, 0);
+            const consumedProtein = userFoods.reduce((acc, item) => acc+item.protein, 0);
+            const consumedCarbs = userFoods.reduce((acc, item) => acc+item.carbs, 0);
+            const consumedFat = userFoods.reduce((acc, item) => acc+item.fat, 0);
+
+            const maintenanceCalories = goalWeight ? goalWeight.goalWeight* 24 : 0;
+            const activityCalories = maintenanceCalories * (goalWeight ? activityMultiplier[goalWeight.activityLevel] : 0);
+            const adjustment = ((goalWeight ? goalWeight.goalWeight : 0) - (userWeight ? userWeight.weight : 0)) * 50;
+            const totalCalories = activityCalories + adjustment;
+            const totalCarbs = totalCalories * 0.45;
+            const totalProtein = totalCalories * 0.3;
+            const totalFat = totalCalories * 0.25;
+
+            return {
+                totalCalories,
+                consumedCalories,
+                totalCarbs,
+                consumedCarbs,
+                totalFat,
+                consumedFat,
+                totalProtein,
+                consumedProtein
+            }
         } catch (error) {
             throw error;
         }
@@ -141,6 +170,16 @@ class Storage {
     async getWeightEntries(): Promise<WeightEntry[]> {
         try {
             return await db.select().from(weightEntry);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getWeightEntryForUser(userId: string): Promise<WeightEntry | undefined> {
+        try {
+            const weight = (await db.select().from(weightEntry).where(and(eq(weightEntry.userId, userId), sql`DATE(${weightEntry.uploadedAt}) <= CURRENT_DATE`)).orderBy(desc(weightEntry.uploadedAt)))[0];
+
+            return weight;
         } catch (error) {
             throw error;
         }

@@ -26,12 +26,12 @@ const { data, isLoading } = useQuery<UserStats>({
     }
 });
 
-const totalCalories = 2200;
-const consumed = computed(() => data.value?.totalCalories ?? 0)
+const totalCalories = computed(() => data.value?.totalCalories ?? 0);
+const consumed = computed(() => data.value?.consumedCalories ?? 0);
 const macros = computed(() => ({
-    Protein: {color: "#DB7070", consumed: data.value?.totalProtein ?? 0, total: 150},
-    Fat: {color: "#6296E0", consumed: data.value?.totalFat ?? 0, total: 65},
-    Carbs: {color: "#D89964", consumed: data.value?.totalCarbs ?? 0, total: 244},
+    Protein: {color: "#DB7070", consumed: data.value?.consumedProtein ?? 0, total: data.value?.totalProtein ?? 0},
+    Fat: {color: "#6296E0", consumed: data.value?.consumedFat ?? 0, total: data.value?.totalFat ?? 0},
+    Carbs: {color: "#D89964", consumed: data.value?.consumedCarbs ?? 0, total: data.value?.totalCarbs ?? 0},
 }));
 
 

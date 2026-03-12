@@ -25,8 +25,12 @@ export type UserFoodEntry = {
 }
 
 export type UserStats = {
+    consumedCalories: number,
+    totalCalories: number,
+    consumedProtein: number,
     totalProtein: number,
+    consumedCarbs: number,
     totalCarbs: number,
-    totalFat: number,
-    totalCalories: number
+    consumedFat: number,
+    totalFat: number
 }
