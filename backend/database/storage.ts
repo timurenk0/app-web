@@ -109,9 +109,19 @@ class Storage {
     }
 
     // ================= User Goals Entry Methods ================= 
-    async getUserGoalEntries(userId: string): Promise<UserGoalEntry[]> {
+    async getUserGoalEntries(): Promise<UserGoalEntry[]> {
         try {
-            return await db.select().from(userGoalEntry).where(eq(userGoalEntry.userId, userId));
+            return await db.select().from(userGoalEntry);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getUserGoalEntryForUser(userId: string): Promise<UserGoalEntry | undefined> {
+        try {
+            const uge = (await db.select().from(userGoalEntry).where(eq(userGoalEntry.userId, userId)).orderBy(desc(userGoalEntry.uploadedAt)))[0];
+
+            return uge;
         } catch (error) {
             throw error;
         }

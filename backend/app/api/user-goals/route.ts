@@ -11,9 +11,9 @@ export async function GET(req: NextRequest) {
         });
         if (!session) return res.json({ error: "UNAUTHORIZED" }, { status: 401 });
     
-        const userGoals = await storage.getUserGoalEntries(session.user.id);
+        const userGoal = await storage.getUserGoalEntryForUser(session.user.id);
 
-        return res.json(userGoals, { status: 200 });
+        return res.json(userGoal, { status: 200 });
     } catch (error) {
         const msg = error instanceof Error ? error.message : "Unknown error";
         return res.json({ error: `Failed to fetch user goal records: ${msg}` }, { status: 500 });
@@ -35,7 +35,6 @@ export async function POST(req: NextRequest) {
         if (!newUserWeightEntry) return res.json({ error: "Failed to post user weight entry" }, { status: 500 });
 
         const validUserGoalData = insertUserGoalEntrySchema.parse({ ...body, userId: session.user.id });
-
         const newUserGoalEntry = await storage.addUserGoalEntry(validUserGoalData);
 
         return res.json(newUserGoalEntry, { status: 201 });

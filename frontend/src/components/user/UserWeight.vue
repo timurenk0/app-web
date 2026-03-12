@@ -8,7 +8,7 @@ import { computed } from "vue";
 import UserGoalForm from "./UserGoalForm.vue";
 
 
-const { data, isLoading } = useQuery<{ date: string, weight: number }[]>({
+const { data, isLoading } = useQuery<{ goal: number, history: { date: string, weight: number }[] }>({
     queryKey: ["weights"],
     queryFn: async() => {
         const res = await fetch("http://localhost:3000/api/weights", {
@@ -33,7 +33,8 @@ const last7Days = Array.from ({ length: 7 }).map((_, i) => {
 });
 
 const chartData = computed((): ChartData => {
-    const weights = data.value ?? [];
+    const weights = data.value ? data.value.history : [];
+    const goal = data.value ? data.value.goal : 0;
 
     return {
         labels: last7Days,
@@ -48,7 +49,7 @@ const chartData = computed((): ChartData => {
             },
             {
                 label: "Goal",
-                data: new Array(7).fill(88), 
+                data: new Array(7).fill(goal), 
                 fill: false,
                 borderColor: "#666",
                 backgroundColor: "#99999944",

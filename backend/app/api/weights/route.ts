@@ -14,9 +14,9 @@ export async function GET(req: NextRequest) {
 
         const weights = await storage.getWeightEntriesForUser(session.user.id);
 
-        const today = new Date();
-        const result: { date: string; weight: number | null }[] = [];
-
+        const today = new Date()
+        const result: { goal: number, history: { date: string, weight: number }[] } = { goal: 0, history: [] };
+        
         // map existing entries
         const weightsMap = new Map(
             weights.map((w) => [
@@ -37,11 +37,15 @@ export async function GET(req: NextRequest) {
 
             if (weightsMap.has(dateStr)) {
                 anchorWeight = weightsMap.get(dateStr)!;
-                result.push({ date: dateStr, weight: anchorWeight });
+                result.history.push({ date: dateStr, weight: anchorWeight });
             } else {
-                result.push({ date: dateStr, weight: anchorWeight });
+                result.history.push({ date: dateStr, weight: anchorWeight });
             }
         }
+
+        const goalWeight = await storage.getUserGoalEntryForUser(session.user.id);
+        result.goal = goalWeight ? goalWeight.goalWeight : 0;
+
 
         return res.json(result, { status: 200 });
     } catch (error) {
