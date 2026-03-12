@@ -1,6 +1,6 @@
 import { and, asc, desc, eq, gt, sql } from "drizzle-orm";
 import { db } from "./db";
-import { foodEntry, FoodEntry, InsertUserFoodEntry, InsertWeightEntry, userFoodEntry, UserFoodEntry, weightEntry, WeightEntry } from "./schema";
+import { foodEntry, FoodEntry, InsertUserFoodEntry, InsertWeightEntry, userFoodEntry, UserFoodEntry, userGoalEntry, UserGoalEntry, weightEntry, WeightEntry } from "./schema";
 
 class Storage {
     constructor() {}
@@ -108,6 +108,15 @@ class Storage {
         }
     }
 
+    // ================= User Goals Entry Methods ================= 
+    async getUserGoalEntries(userId: string): Promise<UserGoalEntry[]> {
+        try {
+            return await db.select().from(userGoalEntry).where(eq(userGoalEntry.userId, userId));
+        } catch (error) {
+            throw error;
+        }
+    }
+    
     // =================== Weight Entry Methods =================== 
     async getWeightEntries(): Promise<WeightEntry[]> {
         try {
