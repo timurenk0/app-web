@@ -1,6 +1,6 @@
 import { and, asc, desc, eq, gt, sql } from "drizzle-orm";
 import { db } from "./db";
-import { foodEntry, FoodEntry, InsertUserFoodEntry, InsertWeightEntry, userFoodEntry, UserFoodEntry, userGoalEntry, UserGoalEntry, weightEntry, WeightEntry } from "./schema";
+import { foodEntry, FoodEntry, InsertUserFoodEntry, InsertUserGoalEntry, InsertWeightEntry, userFoodEntry, UserFoodEntry, userGoalEntry, UserGoalEntry, weightEntry, WeightEntry } from "./schema";
 
 class Storage {
     constructor() {}
@@ -112,6 +112,16 @@ class Storage {
     async getUserGoalEntries(userId: string): Promise<UserGoalEntry[]> {
         try {
             return await db.select().from(userGoalEntry).where(eq(userGoalEntry.userId, userId));
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async addUserGoalEntry(insertUserGoalEntry: InsertUserGoalEntry): Promise<UserGoalEntry | undefined> {
+        try {
+            const [uge] = await db.insert(userGoalEntry).values(insertUserGoalEntry).returning();
+
+            return uge;
         } catch (error) {
             throw error;
         }
