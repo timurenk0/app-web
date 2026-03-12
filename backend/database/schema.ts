@@ -56,7 +56,7 @@ export const userGoalEntry = pgTable("user_goal_entry", {
   updatedAt: timestamp("updated_at").notNull().defaultNow()
 }, (table) => [check("activity_level_check", sql`activity_level IN ('low', 'moderate', 'high')`)]);
 
-export const insertUserGoalEntry = createInsertSchema(userGoalEntry).omit({
+export const insertUserGoalEntrySchema = createInsertSchema(userGoalEntry).omit({
   id: true,
   uploadedAt: true
 });
@@ -139,7 +139,7 @@ export type UserFoodEntry = typeof userFoodEntry.$inferSelect;
 export type InsertUserFoodEntry = z.infer<typeof insertUserFoodEntrySchema>;
 
 export type UserGoalEntry = typeof userGoalEntry.$inferSelect;
-export type InsertUserGoalEntry = z.infer<typeof insertUserGoalEntry>;
+export type InsertUserGoalEntry = z.infer<typeof insertUserGoalEntrySchema>;
 
 export type WeightEntry = typeof weightEntry.$inferSelect;
 export type InsertWeightEntry = z.infer<typeof insertWeightEntrySchema>;
