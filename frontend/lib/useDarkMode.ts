@@ -1,40 +1,34 @@
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watchEffect } from "vue";
+
 
 const DARK_CLASS = "dark";
+const isDark = ref(false);
+
+const theme = localStorage.getItem("theme");
+
+switch (theme) {
+    case "dark":
+        isDark.value = true;
+        break;
+    case "light":
+        isDark.value = false;
+        break;
+    default:
+        isDark.value = false;
+        break;
+}
+
+document.documentElement.classList.toggle(DARK_CLASS, isDark.value);
+
+watchEffect(() => {
+    document.documentElement.classList.toggle(DARK_CLASS, isDark.value);
+    localStorage.setItem("theme", isDark.value ? "dark" : "light");
+});
 
 export function useDarkMode() {
-    const isDark = ref(false);
-
-    function apply() {
-        if (isDark.value) {
-            document.documentElement.classList.add(DARK_CLASS);
-        } else {
-            document.documentElement.classList.remove(DARK_CLASS);
-        }
-    }
-
-    onMounted(() => {
-        const savedTheme = localStorage.getItem("theme");
-        
-        switch (savedTheme) {
-            case "dark":
-                isDark.value = true;
-            case "light":
-                isDark.value = false;
-            default:
-                isDark.value = false;
-        }
-        apply();
-    });
-
     function toggle() {
         isDark.value = !isDark.value;
     }
-
-    watch(isDark, () => {
-        apply();
-        localStorage.setItem("theme", isDark.value ? "dark" : "light"); 
-    })
 
     return {
         isDark: computed(() => isDark.value),
