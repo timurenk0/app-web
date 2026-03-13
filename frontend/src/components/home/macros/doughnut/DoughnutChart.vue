@@ -1,20 +1,6 @@
 <script setup lang="ts">
-<<<<<<< HEAD
-import { Doughnut } from 'vue-chartjs';
-import {
-    Chart as ChartJS,
-    Title,
-    Tooltip,
-    ArcElement
-} from "chart.js"
-import { computed, ref } from 'vue';
-
-ChartJS.register(Title, Tooltip, ArcElement)
-=======
-import type { ChartOptions } from "chart.js";
 import Chart from "primevue/chart";
-import { ref } from "vue";
->>>>>>> eeb05cbbf90896b5892e4f2b3bf20af0bec70ef9
+import { computed, ref } from "vue";
 
 
 let chartView = ref("consumed");
@@ -35,13 +21,8 @@ const ghostTextColor = getComputedStyle(document.documentElement);
 const chartData = computed(() => ({
     labels: ["Consumed", "Remaining"],
     datasets: [{
-<<<<<<< HEAD
         data: consumed > totalCalories ? [totalCalories, 0] : data.value,
-        backgroundColor: ["#27a433", "#e5e5e5"],
-=======
-        data: consumed > totalCalories ? [totalCalories, 0] : data,
         backgroundColor: [ghostTextColor.getPropertyValue("--color-accent"), ghostTextColor.getPropertyValue("--color-ghost")],
->>>>>>> eeb05cbbf90896b5892e4f2b3bf20af0bec70ef9
         borderWidth: 0,
         spacing: 8,
         borderRadius: [20, 20],

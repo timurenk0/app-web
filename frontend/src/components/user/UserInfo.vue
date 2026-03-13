@@ -36,13 +36,8 @@ const userImage = (image === undefined || image === null) ? "src/pfp/apple.jpg" 
                         </div>
                         <p class="text-xs text-center mt-1 underline">Change photo</p>
                 </div>
-<<<<<<< HEAD
-                <div class="col-span-3 my-auto mx-auto">
-                    <h2 class="text-main text-lg font-semibold">{{ username }}</h2>
-=======
                 <div class="col-span-2 my-auto mx-auto">
                     <h2 class="text-accent text-lg font-semibold">{{ username }}</h2>
->>>>>>> eeb05cbbf90896b5892e4f2b3bf20af0bec70ef9
                     <p class="text-xs text-ghost-text">{{ email }}</p>
                 </div>
             </div>
