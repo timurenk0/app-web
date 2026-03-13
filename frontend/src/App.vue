@@ -4,10 +4,12 @@ import Toast from "primevue/toast";
 import Layout from "@c/layout/Layout.vue";
 import { computed, Suspense } from 'vue';
 import { useRoute } from 'vue-router';
+import { useDarkMode } from '@l/useDarkMode';
 
 const route = useRoute();
 
 const hideFooter = computed(() => !route.meta.hideFooter);
+useDarkMode();
 </script>
 
 <template>

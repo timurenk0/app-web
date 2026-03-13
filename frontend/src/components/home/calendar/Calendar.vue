@@ -19,8 +19,8 @@ function selectDate(day: string) {
 </script>
 
 <template>
-    <section class="flex items-center justify-between w-screen bg-white px-5 py-2">
-        <div @click="selectDate(n.toISOString().slice(0, 10)) " v-for="n in dates" :key="n.getDate()" :class="['calendar-day', n.getDate()===new Date(selectedDate).getDate() && 'bg-main/50']">
+    <section class="flex items-center justify-between w-screen bg-auxiliary px-5 py-2">
+        <div @click="selectDate(n.toISOString().slice(0, 10)) " v-for="n in dates" :key="n.getDate()" :class="['calendar-day', n.getDate()===new Date(selectedDate).getDate() && 'bg-accent/50']">
             {{ n.getDate() }}
         </div>
     </section>
