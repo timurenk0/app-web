@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Image from 'primevue/image';
-import { ArrowRight, ArrowUp } from 'lucide-vue-next';
+import { ArrowDown, ArrowUp } from 'lucide-vue-next';
 import { Panel } from 'primevue';
 import UserWeight from './UserWeight.vue';
 import UserMacrosSplitGraph from './UserMacrosSplitGraph.vue';
@@ -47,7 +47,7 @@ const userImage = (image === undefined || image === null) ? "src/pfp/apple.jpg" 
                 <ArrowUp />
             </div>
             <div @click="toggle" v-else>
-                <ArrowRight />
+                <ArrowDown />
             </div>
         </template>
         <template #default>
