@@ -47,7 +47,7 @@ a {
 .active {
     position: absolute;
     transform: translateY(calc(var(--spacing)*3));
-    background-color: var(--color-primary);
+    background-color: var(--color-accent);
     border-radius: 50%;
     padding: calc(var(--spacing)*3);
     margin-bottom: calc(var(--spacing)*6);

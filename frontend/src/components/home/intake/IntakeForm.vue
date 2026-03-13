@@ -127,7 +127,7 @@ const food = computed(() => {
                 <!-- Food amount and macros -->
                 <div v-if="food" class="w-full">
                     <InputNumber name="amount" v-model="amount" fluid :default-value="100" :suffix="` ${food.uom}`" />
-                    <div class="mt-4 w-full max-w-sm border-2 border-black bg-white text-black p-4 font-sans">
+                    <div class="mt-4 w-full max-w-sm border-2 border-black bg-card text-text p-4 font-sans">
                         <!-- Title -->
                         <div class="text-2xl font-bold tracking-tight px-2">
                             Nutrition Facts

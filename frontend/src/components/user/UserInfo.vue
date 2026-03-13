@@ -61,6 +61,6 @@ const userImage = (image === undefined || image === null) ? "src/pfp/apple.jpg" 
 
 <style scoped>
 #image-shadow {
-    box-shadow: 0 0 4px 1px rgba(0, 0, 0, .75);
+    box-shadow: 0 0 4px 1px var(--color-ghost);
 }
 </style>

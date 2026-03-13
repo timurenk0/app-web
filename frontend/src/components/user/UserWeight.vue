@@ -22,8 +22,8 @@ const { data, isLoading } = useQuery<{ goal: number, history: { date: string, we
 })
 
 const documentStyle = getComputedStyle(document.documentElement);
-const primaryColor = documentStyle.getPropertyValue("--color-primary");
-const primaryGhostColor = documentStyle.getPropertyValue("--color-primary-ghost")
+const primaryColor = documentStyle.getPropertyValue("--color-accent");
+const primaryGhostColor = documentStyle.getPropertyValue("--color-accent-ghost")
 
 const today = new Date();
 const last7Days = Array.from ({ length: 7 }).map((_, i) => {
