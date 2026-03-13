@@ -19,6 +19,16 @@ createApp(App)
     .use(router)
     .use(vuetify)
     .use(PrimeVue, {
+        pt: {
+            card: {
+                root: {
+                    style: { backgroundColor: "var(--color-card)" }
+                },
+                title: {
+                    style: { color: "var(--color-text-card)" }
+                }
+            }
+        },
         theme: {
             preset: Aura,
             options: {

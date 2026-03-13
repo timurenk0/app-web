@@ -13,7 +13,7 @@ const { isDark, toggle } = useDarkMode();
         text-gray-700 hover:text-gray-900
         dark:text-gray-300 dark:hover:text-gray-100
         hover:bg-gray-200 dark:hover:bg-gray-700
-        transition-colors focus:outline-none focus:ring-2 focus:ring-main/50"
+        transition-colors focus:outline-none focus:ring-2 focus:ring-accent/50"
     >
         <Sun v-if="isDark" />
         <Moon v-else />

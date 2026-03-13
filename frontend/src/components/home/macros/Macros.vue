@@ -40,7 +40,7 @@ const macros = computed(() => ({
 <template>
     <Card class="w-full">
         <template #title>
-            <p class="card-title text-4xl">Macros</p>
+            <p class="damion text-4xl">Macros</p>
         </template>
         <template v-if="!isLoading" #content>
             <DoughnutChart :totalCalories="totalCalories" :consumed="consumed" />
