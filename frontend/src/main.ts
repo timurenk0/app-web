@@ -22,7 +22,7 @@ createApp(App)
         theme: {
             preset: Aura,
             options: {
-                darkModeSelector: "light"
+                darkModeSelector: ".dark"
             }
         }
     })
