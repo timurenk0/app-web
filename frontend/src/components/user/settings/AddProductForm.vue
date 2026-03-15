@@ -26,7 +26,7 @@ const formSchema = z.object({
 type ProductFormValues = z.infer<typeof formSchema>;
 
 const visible = ref(false);
-const uoms = ["100g", "100ml", "oz"]
+const uoms = ["100g", "100ml"]
 const selectedUom = ref("g");
 const toast = useToast();
 
@@ -63,7 +63,13 @@ const onSubmit = async (event: FormSubmitEvent) => {
         return;
     }
 
-    mutation.mutate(values);
+    const data = {
+        ...values,
+        uom: values.uom.slice(3)
+    }
+
+    console.log(data);
+    mutation.mutate(data);
 }
 </script>
 
