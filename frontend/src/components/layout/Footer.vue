@@ -76,7 +76,7 @@ a {
     position: absolute;
     transform: translateY(calc(var(--spacing)*3));
     color: var(--color-accent);
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid var(--color-text);
 }
 
 .footer-shadow {
