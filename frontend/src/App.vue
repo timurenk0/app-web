@@ -15,6 +15,7 @@ useDarkMode();
 <template>
   <Toast />
   <Layout>
+    <Footer v-if="hideFooter" />
     <Suspense>
       <template #default>
         <router-view />
@@ -23,7 +24,6 @@ useDarkMode();
         <h1>Loading page...</h1>
       </template>
     </Suspense>
-    <Footer v-if="hideFooter" />
   </Layout>
 </template>
 
