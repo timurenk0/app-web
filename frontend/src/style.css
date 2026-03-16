@@ -61,12 +61,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     aspect-ratio: 1;
     color: var(--color-text);
     cursor: pointer;
   }
   .calendar-day:hover {
     background-color: var(--color-hover);
+  }
+
+  @media (min-width: 1024px) {
+    .calendar-day {
+      width: calc(var(--spacing)*16);
+    }
   }
 }
 

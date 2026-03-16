@@ -12,7 +12,7 @@ function handleDate(day: string) {
 
 <template>
     <section class="flex flex-col items-center gap-4 lg:grid lg:grid-cols-2 lg:items-start">
-        <Calendar @date-selected="handleDate" class="col-span-2" />
+        <Calendar @date-selected="handleDate" class="col-span-2 mb-4" />
         <Macros :date="date" />
         <Intake :date="date" />
     </section>

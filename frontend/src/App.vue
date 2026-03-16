@@ -26,6 +26,3 @@ useDarkMode();
     </Suspense>
   </Layout>
 </template>
-
-<style>
-</style>
