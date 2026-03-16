@@ -23,6 +23,7 @@
   --color-ghost: #e5e5e5;
   --color-accent-ghost: #27a42344;
   --color-text-ghost: #a4a4a4;
+  --color-hover: #00000022;
 }
 
 .dark {
@@ -33,6 +34,7 @@
   --color-card: #ffffff22;
   --color-text: #ffffff;
   --color-ghost: #768879;
+  --color-hover: #ffffff22;
 }
 
 
@@ -48,6 +50,7 @@
   --color-accent: var(--color-accent);
   --color-ghost: var(--color-ghost);
   --color-ghost-text: var(--color-text-ghost);
+  --color-hover: var(--color-hover);
 }
 
 @layer components {
@@ -60,6 +63,10 @@
     align-items: center;
     aspect-ratio: 1;
     color: var(--color-text);
+    cursor: pointer;
+  }
+  .calendar-day:hover {
+    background-color: var(--color-hover);
   }
 }
 
