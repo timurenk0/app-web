@@ -34,7 +34,7 @@ const food = computed(() => data.value ?? []);
 
 <template>
     <section class="w-full">
-        <Card>
+        <Card class="w-full">
             <template #content>
                 <span v-if="isLoading">Loading your daily intake...</span>
                 <IntakeCategory

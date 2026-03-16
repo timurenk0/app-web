@@ -11,8 +11,8 @@ function handleDate(day: string) {
 </script>
 
 <template>
-    <section class="flex flex-col items-center gap-4 lg:grid lg:grid-cols-2">
-        <Calendar @date-selected="handleDate" class="lg:hidden" />
+    <section class="flex flex-col items-center gap-4 lg:grid lg:grid-cols-2 lg:items-start">
+        <Calendar @date-selected="handleDate" class="col-span-2" />
         <Macros :date="date" />
         <Intake :date="date" />
     </section>
