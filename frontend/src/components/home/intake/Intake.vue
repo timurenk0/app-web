@@ -33,14 +33,16 @@ const food = computed(() => data.value ?? []);
 </script>
 
 <template>
-    <Card class="w-full">
-        <template #content>
-            <span v-if="isLoading">Loading your daily intake...</span>
-            <IntakeCategory
-                v-for="cat in cats"
-                :title="cat"
-                :foods="food.filter(f=>f.mealType === cat.toLowerCase())"
-            />
-        </template>
-    </Card>
+    <section class="w-full">
+        <Card>
+            <template #content>
+                <span v-if="isLoading">Loading your daily intake...</span>
+                <IntakeCategory
+                    v-for="cat in cats"
+                    :title="cat"
+                    :foods="food.filter(f=>f.mealType === cat.toLowerCase())"
+                />
+            </template>
+        </Card>
+    </section>
 </template>

@@ -38,21 +38,23 @@ const macros = computed(() => ({
 </script>
 
 <template>
-    <Card class="w-full">
-        <template #title>
-            <p class="damion text-4xl">Macros</p>
-        </template>
-        <template v-if="!isLoading" #content>
-            <DoughnutChart :totalCalories="totalCalories" :consumed="consumed" />
-            <div class="w-full flex gap-6 justify-between">
-                <BarChart v-for="[k, v] in Object.entries(macros)"
-                    :key="k"
-                    :title="k"
-                    :color="v.color"
-                    :consumed="v.consumed"
-                    :total="v.total"
-                />
-            </div>
-        </template>
-    </Card>
+    <section class="w-full">
+        <Card>
+            <template #title>
+                <p class="damion text-4xl">Macros</p>
+            </template>
+            <template v-if="!isLoading" #content>
+                <DoughnutChart :totalCalories="totalCalories" :consumed="consumed" />
+                <div class="w-full flex gap-6 justify-between">
+                    <BarChart v-for="[k, v] in Object.entries(macros)"
+                        :key="k"
+                        :title="k"
+                        :color="v.color"
+                        :consumed="v.consumed"
+                        :total="v.total"
+                    />
+                </div>
+            </template>
+        </Card>
+    </section>
 </template>
