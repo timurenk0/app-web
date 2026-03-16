@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import DoughnutChart from './doughnut/DoughnutChart.vue';
-import BarChart from './bar/BarChart.vue';
+import DoughnutChart from './calories/DoughnutChart.vue';
+import BarChart from './macros/BarChart.vue';
 import Card from "primevue/card";
 import { useQuery } from '@tanstack/vue-query';
 import type { UserStats } from '@l/types';
 import { computed, toRef } from 'vue';
+import DoughnutChartLg from './calories/DoughnutChartLg.vue';
+import MDoughnutChart from './macros/MDoughnutChart.vue';
 
 
 const props = defineProps<{
@@ -38,7 +40,7 @@ const macros = computed(() => ({
 </script>
 
 <template>
-    <section class="w-full">
+    <section class="w-full lg:hidden">
         <Card>
             <template #title>
                 <p class="damion text-4xl">Macros</p>
@@ -56,5 +58,31 @@ const macros = computed(() => ({
                 </div>
             </template>
         </Card>
+    </section>
+    <section class="hidden lg:block">
+        <Card class="w-full">
+            <template #title>
+                <p class="damion text-4xl">Macros</p>
+            </template>
+            <template v-if="!isLoading" #content>
+                <DoughnutChartLg :totalCalories="totalCalories" :consumed="consumed" />
+            </template>
+        </Card>
+        <div class="w-full flex justify-between mt-4 gap-4">
+            <Card
+                v-for="[k, v] in Object.entries(macros)"
+                :key="k"
+                class="w-full"
+            >
+            <template #content>
+                <MDoughnutChart
+                    :title="k"
+                    :color="v.color"
+                    :consumed="v.consumed"
+                    :total="v.total"
+                />
+            </template>
+            </Card>
+        </div>
     </section>
 </template>
