@@ -5,7 +5,7 @@ import { foodEntry, FoodEntry, InsertFoodEntry, InsertUserFoodEntry, InsertUserG
 class Storage {
     constructor() {}
 
-    // ==================== User Stas Methods =====================
+    // ==================== User Stats Methods =====================
     async getUserStats(userId: string, date: string): Promise<{
         consumedCalories: number,
         totalCalories: number,
