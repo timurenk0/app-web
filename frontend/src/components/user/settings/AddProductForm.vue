@@ -88,7 +88,7 @@ const onSubmit = async (event: FormSubmitEvent) => {
             <Lock />
         </p>
     </Button>
-    <Dialog v-model:visible="visible" modal header="Add new product" class="w-full mx-4">
+    <Dialog v-model:visible="visible" v-if="userRole === 'admin'" modal header="Add new product" class="w-full mx-4">
         <Form :resolver="resolver" @submit="onSubmit">
             <div class="flex flex-col gap-4 my-2">
                 <FloatLabel variant="on">
