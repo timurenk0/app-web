@@ -38,7 +38,7 @@ const mutation = useMutation({
         return res.json();
     },
     onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["http://localhost:3000/api/weights"] });
+        queryClient.invalidateQueries({ queryKey: ["weights"], exact: true });
         visible.value = false;
         toast.add({ severity: "success", summary: "Weight record uploaded.", life: 2000 }); 
     },
