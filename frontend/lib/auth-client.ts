@@ -1,6 +1,9 @@
 import { createAuthClient } from "better-auth/client";
 export const authClient = createAuthClient({
-    baseURL: "http://localhost:3000"
+    baseURL: "http://localhost:3000",
+    fetchOptions: {
+        credentials: "include"
+    }
 });
 
 
@@ -32,12 +35,17 @@ export const signInWithGoogle = async () => {
 export const signUpWithEmail = async (userInfo: { name: string, email: string, password: string }) => {
     const data = await authClient.signUp.email({
         ...userInfo,
-        callbackURL: CALLBACK_URL
+        callbackURL: CALLBACK_URL+"/login"
+    }, {
+        onSuccess: (ctx) => {
+            alert("Logged in successfully");
+            window.location.href = CALLBACK_URL+"/login"
+        }
     })
     console.log(data);
 }
 
-export const signInWithEmail = async (loginInfo: { name: string, email: string, password: string }) => {
+export const signInWithEmail = async (loginInfo: { email: string, password: string }) => {
     const data = await authClient.signIn.email({
         ...loginInfo,
         callbackURL: CALLBACK_URL

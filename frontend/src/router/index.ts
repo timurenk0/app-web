@@ -32,8 +32,8 @@ export const router = createRouter({
 
 router.beforeEach(async (to, from) => {
     const access = await isLoggedIn();
-    if (!access && to.name !== "Login") {
-        console.log("Should be redirected")
+    if (!access && to.name !== "Login" && to.name !== "Sign Up") {
+        console.log("Unauthorized! Redirecting...")
         return { name: "Login" }
     }
 });

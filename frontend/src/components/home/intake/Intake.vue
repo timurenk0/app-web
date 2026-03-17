@@ -14,7 +14,7 @@ const props = defineProps<{
 const date = toRef(props, "date");
 
 const { data, isLoading } = useQuery<UserFoodEntry[]>({
-    queryKey: ["user-foods", date],
+    queryKey: ["user-foods"],
     queryFn: async () => {
         const res = await fetch(`http://localhost:3000/api/user-foods?date=${date.value}`, {
             method: "GET",

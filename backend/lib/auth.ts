@@ -8,6 +8,7 @@ import { eq } from "drizzle-orm";
 
 export const auth = betterAuth({
     trustedOrigins: ["http://localhost:5173"],
+    
 
     // database adapter
     database: drizzleAdapter(db, {
@@ -16,26 +17,15 @@ export const auth = betterAuth({
 
     // send email verification after signup
     emailVerification: {
-        sendOnSignUp: true,
+        sendOnSignUp: false,
         sendOnSignIn: false,
-        sendVerificationEmail: async ({ user, url, token }) => {
-            // some logic... 
-        },
-        autoSignInAfterVerification: true,
-        expiresIn: 3600
     },
 
     // signin options
     emailAndPassword: {
         enabled: true,
-        disableSignUp: false,
-        requireEmailVerification: true,
         minPasswordLength: 8,
         maxPasswordLength: 128,
-        autoSignIn: true,
-        sendResetPassword: async({ user, url, token }) => {
-            // some logic..
-        },
     },
     socialProviders: {
         google: {
@@ -66,14 +56,6 @@ export const auth = betterAuth({
                 defaultValue: "user",
                 input: false
             },
-            hasPassword: {
-                type: "boolean",
-                defaultValue: false,
-                required: true,
-                input: false
-            }
         }
-    },
-    events: {
     }
 });

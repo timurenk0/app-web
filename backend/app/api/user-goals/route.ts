@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
         if (!session) return res.json({ error: "UNAUTHORIZED" }, { status: 401 });
     
         const userGoal = await storage.getUserGoalEntryForUser(session.user.id);
+        console.log(userGoal)
 
         return res.json(userGoal, { status: 200 });
     } catch (error) {

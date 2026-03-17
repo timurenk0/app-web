@@ -65,7 +65,7 @@ const mutation = useMutation({
         return res.json();
     },
     onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["http://localhost:3000/api/user-foods"] });
+        queryClient.invalidateQueries({ queryKey: ["user-foods"] });
         visible.value = false;
         selectedFood.value = null;
         amount.value = 100;

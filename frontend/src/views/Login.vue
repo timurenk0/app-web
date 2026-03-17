@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Card from 'primevue/card';
-import { Form } from '@primevue/forms';
+import { Form, type FormSubmitEvent } from '@primevue/forms';
 import InputText from 'primevue/inputtext';
 import Message from 'primevue/message';
 import Button from 'primevue/button';
@@ -22,22 +22,24 @@ const formSchema = z.object({
     password: z.string().min(1, { message: 'Password must be at least 8 characters long' })
 })
 const resolver = ref(zodResolver(formSchema));
-type loginFormValues = z.infer<typeof formSchema>;
+type LoginFormValues = z.infer<typeof formSchema>;
 
-const loginWithGoogle = async () => {
+const onSubmit = async (event: FormSubmitEvent) => {
+    const values = event.values as LoginFormValues;
+    if (!values) {
+        console.error("Values not passed");
+        return;
+    }
+
     try {
-        await signInWithGoogle();
+        await signInWithEmail(values);
     } catch (error) {
         const msg = error instanceof Error ? error.message : "Unknown error";
-        throw new Error(msg);
+        toast.add({ severity: "error", summary: "Failed to login", detail: msg, life: 5000 });
+        throw error;
     }
 }
 
-const onFormSubmit = ({ valid }: { valid: boolean }) => {
-    if (valid) {
-        toast.add({ severity: 'success', summary: 'Form is submitted.', life: 3000 });
-    }
-};
 </script>
 
 <template>
@@ -47,7 +49,7 @@ const onFormSubmit = ({ valid }: { valid: boolean }) => {
                 <p class="pb-4 text-2xl font-semibold">Login</p>
             </template>
             <template #content>
-                <Form v-slot="$form" :resolver="resolver" :initialValues="initialValues" @submit="onFormSubmit" class="flex justify-center flex-col gap-6">
+                <Form v-slot="$form" :resolver="resolver" :initialValues="initialValues" @submit="onSubmit" class="flex justify-center flex-col gap-6">
                     <div class="flex flex-col gap-1">
                         <InputText name="email" type="text" placeholder="Email" />
                         <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">{{ $form.email.error?.message }}</Message>
@@ -56,10 +58,11 @@ const onFormSubmit = ({ valid }: { valid: boolean }) => {
                         <InputText name="password" type="password" placeholder="Password" />
                         <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">{{ $form.password.error?.message }}</Message>
                     </div>
-                    <Button v-on:click="loginUser" severity="contrast" label="Submit" />
+                    <Button type="submit" severity="contrast">Login</Button>
+                    <p class="text-sm text-center">Don't have an account yet? <a href="/signup" class="text-blue-500 underline">Sign up</a></p>
                 </Form>
                 <p class="text-center my-4">or</p>
-                <Button severity="secondary" fluid v-on:click="loginWithGoogle">
+                <Button severity="secondary" fluid @click="signInWithGoogle">
                     <v-icon name="fc-google"></v-icon>
                     Login with Google
                 </Button>

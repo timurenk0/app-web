@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Card from 'primevue/card';
-import { Form } from '@primevue/forms';
+import { Form, type FormSubmitEvent } from '@primevue/forms';
 import InputText from 'primevue/inputtext';
 import Message from 'primevue/message';
 import Button from 'primevue/button';
@@ -29,20 +29,21 @@ const formSchema = z.object({
 })
 
 const resolver = ref(zodResolver(formSchema));
-type signupFormValues = z.infer<typeof formSchema>;
+type SignupFormValues = z.infer<typeof formSchema>;
 
-const registerWithEmail = async (data: signupFormValues) => {
+const onFormSubmit = async (event: FormSubmitEvent) => {
+    const values = event.values as SignupFormValues;
+    if (!values) {
+        console.error("Values not passed");
+        return;
+    }
+
     try {
-        await signUpWithEmail(data);
+        await signUpWithEmail(values);
     } catch (error) {
         const msg = error instanceof Error ? error.message : "Unknown error";
-        throw new Error(msg);   
-    }
-}
-
-const onFormSubmit = ({ valid }: { valid: boolean }) => {
-    if (valid) {
-        toast.add({ severity: 'success', summary: 'Form is submitted.', life: 3000 });
+        toast.add({ severity: "error", summary: "Failed to sign up", detail: msg, life: 5000 });
+        throw error;
     }
 };
 </script>
@@ -55,6 +56,10 @@ const onFormSubmit = ({ valid }: { valid: boolean }) => {
             </template>
             <template #content>
                 <Form v-slot="$form" :resolver="resolver" :initialValues="initialValues" @submit="onFormSubmit" class="flex justify-center flex-col gap-6">
+                    <div class="flex flex-col gap-1">
+                        <InputText name="name" type="text" placeholder="Username" />
+                        <Message v-if="$form.name?.invalid" severity="error" size="small" variant="simple">{{ $form.name.error?.message }}</Message>
+                    </div>
                     <div class="flex flex-col gap-1">
                         <InputText name="email" type="text" placeholder="Email" />
                         <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">{{ $form.email.error?.message }}</Message>
