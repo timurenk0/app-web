@@ -11,6 +11,12 @@ import { useMutation } from "@tanstack/vue-query";
 import { useToast } from "primevue";
 import { z } from "zod";
 import { zodResolver } from "@primevue/forms/resolvers/zod";
+import { Lock } from "lucide-vue-next";
+
+
+const { userRole } = defineProps<{
+    userRole: string
+}>();
 
 
 const formSchema = z.object({
@@ -74,9 +80,12 @@ const onSubmit = async (event: FormSubmitEvent) => {
 </script>
 
 <template>
-    <Button @click="visible = true" fluid class="mt-6">
+    <Button @click="visible = true" fluid class="mt-6" :severity="userRole === 'admin' ? 'success' : 'secondary'" :disabled="userRole !== 'admin'">
         <p class="w-full text-center">
             + Add new product
+        </p>
+        <p v-if="userRole !== 'admin'" title="Admin only feature">
+            <Lock />
         </p>
     </Button>
     <Dialog v-model:visible="visible" modal header="Add new product" class="w-full mx-4">
