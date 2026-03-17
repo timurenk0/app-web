@@ -1,10 +1,36 @@
 import { and, asc, desc, eq, gt, sql } from "drizzle-orm";
 import { db } from "./db";
-import { foodEntry, FoodEntry, InsertFoodEntry, InsertUserFoodEntry, InsertUserGoalEntry, InsertWeightEntry, userFoodEntry, UserFoodEntry, userGoalEntry, UserGoalEntry, weightEntry, WeightEntry } from "./schema";
+import { account, Account, foodEntry, FoodEntry, InsertFoodEntry, InsertUserFoodEntry, InsertUserGoalEntry, InsertWeightEntry, userFoodEntry, UserFoodEntry, userGoalEntry, UserGoalEntry, weightEntry, WeightEntry } from "./schema";
+import bcrypt from "bcryptjs";
 
 class Storage {
     constructor() {}
 
+    // ======================= User Methods ========================
+    async setUserPassword(password: string, userId: string, email: string): Promise<Account> {
+        try {
+            const existing = await db.query.account.findFirst({
+                where: (a, { eq, and }) => and(eq(a.userId, userId), eq(a.providerId, "credential"))
+            });
+
+            if (existing) throw new Error("Password is already set. Try to login");
+
+            const hashed = await bcrypt.hash(password, 10);
+
+            const [acc] = await db.insert(account).values({
+                id: crypto.randomUUID(),
+                accountId: email,
+                providerId: "credential",
+                userId,
+                password: hashed
+            }).returning();
+
+            return acc;
+        } catch (error) {
+            throw error;
+        }
+    }
+    
     // ==================== User Stats Methods =====================
     async getUserStats(userId: string, date: string): Promise<{
         consumedCalories: number,

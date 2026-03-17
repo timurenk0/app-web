@@ -1,7 +1,9 @@
 import { db } from "@/database/db";
+import { user } from "@/database/schema";
 import bcrypt from "bcryptjs";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { eq } from "drizzle-orm";
 
 
 export const auth = betterAuth({
@@ -34,16 +36,6 @@ export const auth = betterAuth({
         sendResetPassword: async({ user, url, token }) => {
             // some logic..
         },
-        password: {
-            hash: async (password) => {
-                const hashed = bcrypt.hash(password, 10);
-                return hashed;
-            },
-            verify: async ({ hash, password }) => {
-                const isValid = await bcrypt.compare(password, hash);
-                return isValid;
-            }
-        }
     },
     socialProviders: {
         google: {
@@ -73,7 +65,15 @@ export const auth = betterAuth({
                 required: true,
                 defaultValue: "user",
                 input: false
+            },
+            hasPassword: {
+                type: "boolean",
+                defaultValue: false,
+                required: true,
+                input: false
             }
         }
+    },
+    events: {
     }
 });

@@ -137,6 +137,8 @@ export const verification = pgTable(
 export type FoodEntry = typeof foodEntry.$inferSelect;
 export type InsertFoodEntry = z.infer<typeof insertFoodEntrySchema>;
 
+export type Account = typeof account.$inferSelect;
+
 export type UserFoodEntry = typeof userFoodEntry.$inferSelect;
 export type InsertUserFoodEntry = z.infer<typeof insertUserFoodEntrySchema>;
 
