@@ -88,11 +88,13 @@ const chartOptions: ChartOptions = {
         </template>
         <template #content>
             <span v-if="isLoading">Loading...</span>
-            <Chart type="line" :data="chartData" :options="chartOptions" />
+            <Chart type="line" :data="chartData" :options="chartOptions" class="h-full" />
         </template>
         <template #footer>
-            <UserWeightForm />
-            <UserGoalForm />
+            <div class="lg:flex gap-4">
+                <UserWeightForm />
+                <UserGoalForm />
+            </div>
         </template>
     </Card>
 </template>

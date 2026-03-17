@@ -18,7 +18,7 @@ function setActive(idx: string) {
 </script>
 
 <template>
-    <footer class="fixed left-0 bottom-0 w-full lg:hidden">
+    <footer class="fixed left-0 bottom-0 w-full z-10 lg:hidden">
         <div class="bg-auxiliary footer-shadow grid grid-cols-3 mx-16 my-2 py-4 rounded-full">
             <div
                 v-for="(item,index) in items"
