@@ -33,7 +33,7 @@ function selectDate(day: string) {
                 {{ n.getDate() }}
             </div>
         </section>
-        <section class="hidden lg:grid grid-cols-2 items-center justify-between w-full bg-auxiliary px-5 py-2">
+        <section class="hidden lg:grid grid-cols-2 items-center justify-between w-full bg-auxiliary px-5 py-2 rounded-lg">
             <div class="w-full damion text-8xl max-h-0 flex justify-center items-center">
                 <p>Calendar</p>
             </div>
