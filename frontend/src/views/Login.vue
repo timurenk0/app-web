@@ -43,8 +43,8 @@ const onSubmit = async (event: FormSubmitEvent) => {
 </script>
 
 <template>
-    <section class="flex items-center">
-        <Card class="w-full mx-6">
+    <section class="flex items-center lg:justify-center">
+        <Card class="w-full mx-6 lg:w-100">
             <template #title>
                 <p class="pb-4 text-2xl font-semibold">Login</p>
             </template>

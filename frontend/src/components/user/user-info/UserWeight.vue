@@ -88,7 +88,7 @@ const chartOptions: ChartOptions = {
         </template>
         <template #content>
             <span v-if="isLoading">Loading...</span>
-            <Chart type="line" :data="chartData" :options="chartOptions" class="h-full" />
+            <Chart type="line" :data="chartData" :options="chartOptions" class="h-full lg:h-50" />
         </template>
         <template #footer>
             <div class="lg:flex gap-4">
