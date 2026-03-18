@@ -18,7 +18,7 @@ const chartData = computed(() => ({
     labels: ["Consumed", "Remaining"],
     datasets: [{
         data: consumed > total ? [total, 0] : data.value,
-        backgroundColor: [ghostTextColor.getPropertyValue("--color-accent"), ghostTextColor.getPropertyValue("--color-ghost")],
+        backgroundColor: [color, ghostTextColor.getPropertyValue("--color-ghost")],
         borderWidth: 0,
         spacing: 0,
         borderRadius: [20, 20],

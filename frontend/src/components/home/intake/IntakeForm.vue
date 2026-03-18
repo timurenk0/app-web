@@ -66,6 +66,7 @@ const mutation = useMutation({
     },
     onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["user-foods"] });
+        queryClient.invalidateQueries({ queryKey: ["stats"] });
         visible.value = false;
         selectedFood.value = null;
         amount.value = 100;
