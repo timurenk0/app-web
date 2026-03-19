@@ -40,9 +40,12 @@ export const signUpWithEmail = async (userInfo: { name: string, email: string, p
         onSuccess: (ctx) => {
             alert("Logged in successfully");
             window.location.href = CALLBACK_URL+"/login"
+        },
+        onError: (ctx) => {
+            console.error(ctx.error);
+            throw new Error(ctx.error.message);
         }
     })
-    console.log(data);
 }
 
 export const signInWithEmail = async (loginInfo: { email: string, password: string }) => {
