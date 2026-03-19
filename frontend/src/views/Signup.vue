@@ -40,6 +40,10 @@ const onFormSubmit = async (event: FormSubmitEvent) => {
 
     try {
         await signUpWithEmail(values);
+        toast.add({ severity: "success", summary: "Signed up successfully" });
+        setTimeout(() => {
+           window.location.href="http://localhost:5173/login"
+        }, 2000);
     } catch (error) {
         const msg = error instanceof Error ? error.message : "Unknown error";
         toast.add({ severity: "error", summary: "Failed to sign up", detail: msg, life: 5000 });

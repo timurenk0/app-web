@@ -37,10 +37,6 @@ export const signUpWithEmail = async (userInfo: { name: string, email: string, p
         ...userInfo,
         callbackURL: CALLBACK_URL+"/login"
     }, {
-        onSuccess: (ctx) => {
-            alert("Logged in successfully");
-            window.location.href = CALLBACK_URL+"/login"
-        },
         onError: (ctx) => {
             console.error(ctx.error);
             throw new Error(ctx.error.message);
