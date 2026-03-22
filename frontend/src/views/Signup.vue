@@ -61,19 +61,19 @@ const onFormSubmit = async (event: FormSubmitEvent) => {
             <template #content>
                 <Form v-slot="$form" :resolver="resolver" :initialValues="initialValues" @submit="onFormSubmit" class="flex justify-center flex-col gap-6">
                     <div class="flex flex-col gap-1">
-                        <InputText name="name" type="text" placeholder="Username" />
+                        <InputText name="name" type="text" placeholder="Username" autocomplete="off" />
                         <Message v-if="$form.name?.invalid" severity="error" size="small" variant="simple">{{ $form.name.error?.message }}</Message>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <InputText name="email" type="text" placeholder="Email" />
+                        <InputText name="email" type="text" placeholder="Email" autocomplete="off" />
                         <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">{{ $form.email.error?.message }}</Message>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <InputText name="password" type="password" placeholder="Password" />
+                        <InputText name="password" type="password" placeholder="Password" autocomplete="off" />
                         <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">{{ $form.password.error?.message }}</Message>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <InputText name="repeatPassword" type="password" placeholder="Repeat Password" />
+                        <InputText name="repeatPassword" type="password" placeholder="Repeat Password" autocomplete="off" />
                         <Message v-if="$form.repeatPassword?.invalid" severity="error" size="small" variant="simple">{{ $form.repeatPassword.error?.message }}</Message>
                     </div>
                     <Button type="submit" severity="contrast" label="Submit" />
