@@ -2,6 +2,11 @@
 ## Introduction
 Calories counter is a web application that helps you track your daily calorie and macronutrient intake to achieve your fitness goals with ease.
 
+Admin account credentials:
+
+- Email: admin@gmail.com
+- Password: admin1234 (or admin123)
+
 The app provides a convenient and intuitive UI where you can:
 - Track your daily food intake
 - Monitor calories, protein, carbs and fats
