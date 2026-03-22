@@ -4,16 +4,19 @@ import { InputNumber, useToast } from "primevue";
 import Button from "primevue/button";
 import Dialog from "primevue/dialog";
 import Select from "primevue/select";
-import { computed, ref } from "vue";
+import { computed, ref, toRef } from "vue";
 import { z } from "zod";
 import { zodResolver } from "@primevue/forms/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
 import { Form, type FormSubmitEvent } from "@primevue/forms";
 import type { FoodEntry } from "@l/types"
 
-const { type } = defineProps<{
-    type: string
+const props = defineProps<{
+    type: string,
+    date: string
 }>();
+const type = props.type;
+const date = toRef(props, "date");
 const visible = ref(false);
 const selectedFood = ref();
 const amount = ref(100);
@@ -49,7 +52,8 @@ const mutation = useMutation({
     mutationFn: async (values: UserFoodFormValues) => {
         const data = {
             ...values,
-            mealType: type.toLowerCase()
+            mealType: type.toLowerCase(),
+            uploadedAt: date.value
         };
 
         const res = await fetch("http://localhost:3000/api/user-foods", {
@@ -65,7 +69,7 @@ const mutation = useMutation({
         return res.json();
     },
     onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["user-foods"] });
+        queryClient.invalidateQueries({ queryKey: ["user-foods", date] });
         queryClient.invalidateQueries({ queryKey: ["stats"] });
         visible.value = false;
         selectedFood.value = null;

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ArrowDown, ArrowUp, ChevronRight } from "lucide-vue-next";
 import Panel from "primevue/panel";
-import { ref } from "vue";
+import { computed, ref, toRef } from "vue";
 import IntakeForm from "./IntakeForm.vue";
 
 const toggled = ref(true);
@@ -13,10 +13,14 @@ function toggle () {
     toggled.value = !toggled.value;
 }
 
-const { title, foods } = defineProps<{
+const props = defineProps<{
     title: string,
-    foods: any[]
+    foods: any[],
+    date: string
 }>();
+const title = props.title;
+const foods = computed(() => props.foods)
+const date = toRef(props, "date");
 
 </script>
 
@@ -47,7 +51,7 @@ const { title, foods } = defineProps<{
         </template>
 
         <template #icons>
-            <IntakeForm :type="title" />
+            <IntakeForm :type="title" :date="date" />
         </template>
     
         <template #default>

@@ -39,12 +39,11 @@ export const userFoodEntry = pgTable("user_food_entry", {
   foodEntryId: integer("food_entry_id").notNull().references(() => foodEntry.id, { onDelete: "cascade" }),
   amount: integer("amount").notNull().default(100),
   mealType: text("meal_type").notNull(),
-  uploadedAt: timestamp("uploaded_at").notNull().defaultNow()
+  uploadedAt: date("uploaded_at").notNull()
 }, (table) => [check("meal_type", sql`meal_type IN ('breakfast', 'lunch', 'dinner', 'snacks')`)]);
 
 export const insertUserFoodEntrySchema = createInsertSchema(userFoodEntry).omit({
   id: true,
-  uploadedAt: true
 });
 
 export const userGoalEntry = pgTable("user_goal_entry", {

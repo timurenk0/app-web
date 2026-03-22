@@ -14,7 +14,7 @@ const props = defineProps<{
 const date = toRef(props, "date");
 
 const { data, isLoading } = useQuery<UserFoodEntry[]>({
-    queryKey: ["user-foods"],
+    queryKey: ["user-foods", date],
     queryFn: async () => {
         const res = await fetch(`http://localhost:3000/api/user-foods?date=${date.value}`, {
             method: "GET",
@@ -41,6 +41,7 @@ const food = computed(() => data.value ?? []);
                     v-for="cat in cats"
                     :title="cat"
                     :foods="food.filter(f=>f.mealType === cat.toLowerCase())"
+                    :date="date"
                 />
             </template>
         </Card>
