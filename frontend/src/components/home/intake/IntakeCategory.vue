@@ -66,9 +66,6 @@ const date = toRef(props, "date");
                 <div class="col-span-1 my-auto">
                     <p class="font-bold text-sm">{{ f.calories }}</p>
                 </div>
-                <div class="my-auto">
-                    <ChevronRight />
-                </div>
             </div>
         </template>
     </Panel>
