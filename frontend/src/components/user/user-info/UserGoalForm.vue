@@ -40,7 +40,7 @@ const mutation = useMutation({
         return res.json();
     },
     onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["user-goal"] });
+        queryClient.invalidateQueries({ queryKey: ["weights"] });
         visible.value = false;
         toast.add({ severity: "success", summary: "User goal entry added successfully", life: 2000 });
     },
